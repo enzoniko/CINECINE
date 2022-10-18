@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Home</h1>
+    <p>Welcome to our movie theather!</p>
+    <br>
+    <div>
+        {% if sessions %}
+            {% for filme in sessions %}
+                <h3> {{ filme }} </h3>
+                {% for sessao in sessions[filme] %}
+                    {% for element in sessao %}
+                        {% if sessao.index(element) == 3 %}
+                            {% for horario in element %}
+                                <a href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
+                            {% endfor %}
+                        {% elif sessao.index(element) == 4 %}
+                        {% else %}
+                            <p> {{ element }} </p>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p> There are no movies to watch! </p>
+        {% endif %}
+    </div>
+{% endblock content %}
