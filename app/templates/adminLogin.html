@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <legend>Login to access admin functions</legend>
+                <div>
+                    <!-- form.something(class = "something to style") -->
+                    {{ form.password.label(class="senha") }}<br>
+                    {% if form.password.errors %}
+                        {{ form.password() }}
+                        <div>
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="camposenha") }}
+                    {% endif %}  
+                </div>
+                <div>
+                    {{ form.remember_me() }}
+                    {{ form.remember_me.label }}
+                </div>
+            </fieldset>
+            <div>
+                {{ form.submit() }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}
