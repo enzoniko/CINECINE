@@ -23,7 +23,7 @@ def escolha_do_filme():
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
 def poltronas(id_sessao, horario):
-    
+
     session = [sessao for sessao in sessoes if sessao.get_id() == id_sessao][0]
     ingressos = request.form.getlist('poltronas')
     quantidade_lugares_disponiveis_sala_mais_vazia = most_empty(

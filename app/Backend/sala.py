@@ -184,8 +184,7 @@ class Sala:
         for horario in sessao.get_horarios():
 
             # Adiciona uma matriz de poltronas vazias no cronograma respectivo ao horário da sessão
-            self.cronograma[(f"{sessao.get_id()} " + horario)
-                            ] = self.poltronas[:]
+            self.cronograma[f"{sessao.get_id()} {horario}"] = self.poltronas[:]
 
         # Adiciona a sessão à lista de sessões
         self.sessoes.append(sessao)
