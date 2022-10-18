@@ -9,21 +9,22 @@ from app.Backend.pagamento import Pagamento
 payments = {}
 @app.route('/', methods=['GET', 'POST'])
 def escolha_do_filme():
+    print("OI")
     sessions = {}
     for sessao in sessoes:
-        if sessao.get_nome() not in sessions:
+        # print('nome:', sessao.nome)
+        if sessao.nome not in sessions:
            
-            sessions[sessao.get_nome()] = []
+            sessions[sessao.nome] = []
+            for each in [s for s in sessoes if s.nome == sessao.nome]:
+                new = [each.generos, each.legenda, each.DDD, each.horarios, each.id]
+                sessions[sessao.nome].append(new)
 
-            for each in [s for s in sessoes if s.get_nome() == sessao.get_nome()]:
-                new = [each.get_generos(), each.get_legenda(), each.get_DDD(), each.get_horarios(), each.get_id()]
-                sessions[sessao.get_nome()].append(new)
-    return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes(), sessions=sessions, sessoes=sessoes)
+    return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
 def poltronas(id_sessao, horario):
-    
-    session = [sessao for sessao in sessoes if sessao.get_id() == id_sessao][0]
+    session = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
     ingressos = request.form.getlist('poltronas')
     quantidade_lugares_disponiveis_sala_mais_vazia = most_empty(
         [
@@ -32,7 +33,7 @@ def poltronas(id_sessao, horario):
                     f"{id_sessao} {horario}"
                 ]
                 for sessao in sala.get_sessoes()
-                if sessao.get_id() == id_sessao
+                if sessao.id == id_sessao
             ]
             for sala in salas
         ]
