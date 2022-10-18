@@ -12,8 +12,16 @@ from app.Backend.helpers import lista_strings_para_string, automatic_getters_and
 class Filme:
     _nome: str = ""
     _generos: list[str] = field(default_factory=list)
+    classification: float = 0.0
+    description: str = ""
     imagem: str = ""
 
+    def get_generos(self):
+        return self._generos
+    
+    def set_generos(self, generos):
+        self._generos = generos
+        
     # print_info imprime os informações do filme
     def print_info(self):
         print(self._nome, end=" (")

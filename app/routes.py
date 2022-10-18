@@ -18,7 +18,7 @@ def escolha_do_filme():
             for each in [s for s in sessoes if s.get_nome() == sessao.get_nome()]:
                 new = [each.get_generos(), each.get_legenda(), each.get_DDD(), each.get_horarios(), each.get_id()]
                 sessions[sessao.get_nome()].append(new)
-
+    print(sessions)
     return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes(), sessions=sessions, sessoes=sessoes)
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
@@ -49,8 +49,8 @@ def poltronas(id_sessao, horario):
         elif len(ingressos) >  quantidade_lugares_disponiveis_sala_mais_vazia:
             flash('Não há lugares suficientes disponíveis')
         else:
-            # Made letras and numeros dynamic, test out later...
-            poltronas_a_preencher = [letras[::-1][int(ingressos[i].split()[0])]+[str(x+1) for x in range(len(poltronas[0]))][int(ingressos[i].split()[1])] for i in range(len(ingressos))]
+            
+            poltronas_a_preencher = [letras[::-1][:len(poltronas)][int(ingressos[i].split()[0])]+[str(x+1) for x in range(len(poltronas[0]))][::-1][int(ingressos[i].split()[1])] for i in range(len(ingressos))]
             sala.preencher_poltronas(poltronas_a_preencher, id_sessao, horario)
             flash(f'Você comprou {len(ingressos)} ingressos e {form.meias.data} meias-entradas.')
             pagamento = Pagamento(len(ingressos), form.meias.data)

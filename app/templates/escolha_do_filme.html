@@ -6,16 +6,28 @@
     <div>
         {% if sessions %}
             {% for filme in sessions %}
-                <h3> {{ filme }} </h3>
+                <h2> {{ filme }} </h2>
                 {% for sessao in sessions[filme] %}
-                    {% for element in sessao %}
-                        {% if sessao.index(element) == 3 %}
-                            {% for horario in element %}
+                    {% for i in range(sessao|length) %}
+                        {% if i == 0 %}
+                            {% for element in sessao[i] %}
+                                <p> {{ element }} </p>
+                            {% endfor %}
+                        {% elif i == 1 %}
+                            {% if sessao[i] == True and sessao[i + 1] == True %}
+                                <p>3D - LEG</p>
+                            {% elif sessao[i] == True and sessao[i + 1] == False %}
+                                <p>3D - DUB</p>
+                            {% elif sessao[i] == False and sessao[i + 1] == True %}
+                                <p>2D - LEG</p>
+                            {% else %}
+                                <p>2D - DUB</p>
+                            {% endif %}
+                        {% elif i == 3 %}
+                            {% for horario in sessao[i] %}
                                 <a href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
                             {% endfor %}
-                        {% elif sessao.index(element) == 4 %}
-                        {% else %}
-                            <p> {{ element }} </p>
+                        {% elif i == 4 %}
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
