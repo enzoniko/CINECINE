@@ -1,6 +1,8 @@
 # Importa a função lista_strings_para_string do módulo helpers
+
 from dataclasses import dataclass, field
 from app.Backend.helpers import lista_strings_para_string, automatic_getters_and_setters
+
 
 # Importa a função lista_strings_para_string do módulo helpers
 # from helpers import lista_strings_para_string
@@ -29,3 +31,4 @@ class Filme:
 
 f = Filme("O Poderoso Chefão", ["Drama", "Crime"], "https://www.imdb.com/title/tt0068646/mediaviewer/rm1776027136")
 f.print_info()
+

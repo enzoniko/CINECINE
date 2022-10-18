@@ -1,12 +1,26 @@
-{% extends "layout.html" %}
-{% block content %}
-    <h1>Home</h1>
-    <p>Welcome to our movie theather!</p>
-    <br>
+<header class="home">
+    <nav>
+        <div>
+            <h1 class="nome_marca">CINECINE</h1>
+        </div>
+        <div class="header">
+            {% extends "layout.html" %}
+            {% block content %} 
+        </div>
+    </nav>
+</header>
+<main>
     <div>
         {% if sessions %}
             {% for filme in sessions %}
-                <h2> {{ filme }} </h2>
+            <div class="cartaz">
+                <div class="cartaz_imagem">
+                    <img src="../static/img/senhordosaneis.jpg">
+                </div>
+                <div class="cartaz_info">
+                    <div class="titulo_filme">
+                    <h2> {{ filme }} </h2>
+                </div>
                 {% for sessao in sessions[filme] %}
                     {% for i in range(sessao|length) %}
                         {% if i == 0 %}
@@ -31,9 +45,13 @@
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
+                </div>
+            </div>
             {% endfor %}
         {% else %}
             <p> There are no movies to watch! </p>
         {% endif %}
     </div>
-{% endblock content %}
+    {% endblock content %}
+</main>
+

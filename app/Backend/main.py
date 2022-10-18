@@ -17,11 +17,11 @@ from app.Backend.pagamento import Pagamento
 pagamentos = []
 
 # Listas de sessoes e filmes
-sessoes = [Sessao('Barbie', ['aventura'], ['15:00', '20:00'], True, False), Sessao('Barbie', ['aventura'], ['11:00', '23:00'], True, True), Sessao('Sonic', ['Romance'], ['15:00', '20:00'], False, False)]
+sessoes = [Sessao(nome='O Senhor dos Aneis', generos=['aventura'], horarios=['15:00', '20:00'], DDD=False, legenda=False), Sessao(nome='O Senhor dos Aneis', generos=['aventura'], horarios=['11:00', '23:00'], DDD=True, legenda=True), Sessao(nome='MIB', generos=['aventura'], horarios=['15:00', '20:00'], DDD=False, legenda=False)]
 salas[0].adicionar_sessao(sessoes[0])
 salas[0].adicionar_sessao(sessoes[1])
 salas[1].adicionar_sessao(sessoes[2])
-filmes = [Filme("Barbie", ["aventura"]), Filme("Sonic", ["romance"])]
+filmes = [Filme(nome="O Senhor dos Aneis", generos=["aventura"]), Filme(nome="MIB", generos=["aventura"])]
 
 # Função que preenche as poltronas de uma sala
 
@@ -518,3 +518,4 @@ def main():
 # Chama a função main no início do programa
 if __name__ == '__main__':
     main()
+

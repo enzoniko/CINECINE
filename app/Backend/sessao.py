@@ -78,3 +78,4 @@ class Sessao(Filme):
         self.set_horarios(horarios)
         self.set_DDD(DDD)
         self.set_legenda(legenda)
+

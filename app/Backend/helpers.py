@@ -1,7 +1,5 @@
 # Função lista_strings_para_string: recebe uma lista de strings e retorna uma string com todas as strings separadas por vírgula
 from functools import partial
-
-
 def lista_strings_para_string(lista):
     return ", ".join(lista)
 
@@ -50,6 +48,7 @@ def verificador_input(coisa, lista, condicao, mensagem_erro):
             return numero
         # Se o numero não existir, é printado um aviso
         else:
+
             print(mensagem_erro)
 
 def automatic_getters_and_setters(original_class):
