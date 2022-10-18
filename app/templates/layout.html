@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css') }}">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Home</title>
+    {% endif %}
+    <!-- Quando precisar usar algum link, usa a função: url_for('nome da função no app.py') -->
+    <a href="{{ url_for('escolha_do_filme') }}" >Home</a>
+    <a href="{{ url_for('adminLogin') }}">Admin Login</a>
+</head>
+<body>
+    <div>
+        {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{category}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

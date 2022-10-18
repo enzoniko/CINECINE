@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+    <br>
+    <div>
+        {% if sessao %}
+            <p> {{ sessao.get_nome() }} </p>
+            <p> {{ sessao.get_generos() }} </p>
+            <p> {{ horario }} </p>
+            <p> {{ sessao.get_legenda() }} </p>
+            <p> {{ sessao.get_DDD() }} </p>
+        {% else %}
+            <p> There are no movies to watch! </p>
+        {% endif %}
+    </div>
+    <div>
+        <form method="POST" action="">
+            {% for linha in range(poltronas|length) %}
+                <br>
+                {% for poltrona in range(poltronas[linha]|length) %}
+                    {% if poltronas[linha][poltrona] == 1 %}
+                        <input type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}" disabled>
+                    {% else %}
+                        <input type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}">
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <legend>Enter the number of meias</legend>
+                <div>
+                    <!-- form.something(class = "something to style") -->
+                    {{ form.meias.label(class="senha") }}<br>
+                    {% if form.meias.errors %}
+                        {{ form.meias() }}
+                        <div>
+                            {% for error in form.meias.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.meias(class="camposenha") }}
+                    {% endif %}  
+                </div>
+             
+            </fieldset>
+            <div>
+                {{ form.submit() }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}
