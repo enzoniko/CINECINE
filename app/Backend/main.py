@@ -518,3 +518,4 @@ def main():
 # Chama a função main no início do programa
 if __name__ == '__main__':
     main()
+

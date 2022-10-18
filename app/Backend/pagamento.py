@@ -48,3 +48,4 @@ class Pagamento():
         print(f"Meias: {self.get_meias()}")
         print(f"Valor: R${self.get_valor()},00")
         print(f"Forma de pagamento: {self.get_forma()}")
+

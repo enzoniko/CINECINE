@@ -1,4 +1,5 @@
 # Função lista_strings_para_string: recebe uma lista de strings e retorna uma string com todas as strings separadas por vírgula
+from functools import partial
 def lista_strings_para_string(lista):
     return ", ".join(lista)
 
@@ -47,4 +48,14 @@ def verificador_input(coisa, lista, condicao, mensagem_erro):
             return numero
         # Se o numero não existir, é printado um aviso
         else:
+
             print(mensagem_erro)
+
+def automatic_getters_and_setters(original_class):
+    privateatributeslist = [name for name, _ in original_class.__dict__.items() if name.startswith("_") and not name.startswith("__")]
+
+    for name in privateatributeslist:
+        setattr(original_class, f'get{name}', classmethod(partial(lambda cls, name: getattr(cls, name), name=name)))
+        setattr(original_class, f'set{name}', classmethod(partial(lambda cls, value, name: setattr(cls, name, value), name=name)))
+
+    return original_class
