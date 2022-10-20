@@ -14,7 +14,7 @@ from app.Backend.helpers import lista_strings_para_string
 class Filme:
     nome: str = ""
     generos: List[str] = field(default_factory=list)
-    classification: float = 0.0
+    classificacao: str = ""
     description: str = ""
     imagem: str = ""
 

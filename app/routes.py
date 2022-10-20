@@ -1,32 +1,33 @@
+from typing import Dict, List
 from flask import render_template, flash, redirect, url_for, request
 from app import app
+from app.Backend.sessao import Sessao
 from app.forms import AdminLoginForm, CompraForm
-
-from app.Backend.main import sessoes, printar_filmes, printar_sessoes, sala_mais_vazia
+from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia
 from app.Backend.helpers import most_empty
 from app.Backend.sala import salas, letras
 from app.Backend.pagamento import Pagamento
-payments = {}
+
+payments: Dict[str, Pagamento] = {}
 @app.route('/', methods=['GET', 'POST'])
 def escolha_do_filme():
-    print("OI")
-    sessions = {}
+    sessions: Dict[str, list] = {}
     for sessao in sessoes:
         # print('nome:', sessao.nome)
         if sessao.nome not in sessions:
            
-            sessions[sessao.nome] = []
+            sessions[sessao.nome]: list = []
             for each in [s for s in sessoes if s.nome == sessao.nome]:
-                new = [each.generos, each.legenda, each.DDD, each.horarios, each.id]
+                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id]
                 sessions[sessao.nome].append(new)
 
     return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
 def poltronas(id_sessao, horario):
-    session = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
-    ingressos = request.form.getlist('poltronas')
-    quantidade_lugares_disponiveis_sala_mais_vazia = most_empty(
+    session: List[Sessao] = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
+    ingressos: List[str] = request.form.getlist('poltronas')
+    quantidade_lugares_disponiveis_sala_mais_vazia: int = most_empty(
         [
             [
                 sala.cronograma[
@@ -39,10 +40,10 @@ def poltronas(id_sessao, horario):
         ]
     )
 
-    sala = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
-    poltronas = sala.cronograma[f"{id_sessao} {horario}"]
-    poltronas = [poltronas[i-1][::-1] for i in range(len(poltronas), 0, -1)]
-    form = CompraForm()
+    sala: Sessao = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
+    poltronas: List[List[int]] = sala.cronograma[f"{id_sessao} {horario}"]
+    poltronas: List[List[int]] = [poltronas[i-1][::-1] for i in range(len(poltronas), 0, -1)]
+    form: CompraForm = CompraForm()
     if form.validate_on_submit():
         if form.meias.data > len(ingressos):
             flash('Você não pode comprar mais meias do que ingressos')
@@ -52,8 +53,8 @@ def poltronas(id_sessao, horario):
             poltronas_a_preencher = [letras[::-1][:len(poltronas)][int(ingressos[i].split()[0])]+[str(x+1) for x in range(len(poltronas[0]))][::-1][int(ingressos[i].split()[1])] for i in range(len(ingressos))]
             sala.preencher_poltronas(poltronas_a_preencher, id_sessao, horario)
             flash(f'Você comprou {len(ingressos)} ingressos e {form.meias.data} meias-entradas.')
-            pagamento = Pagamento(len(ingressos), form.meias.data)
-            payments[f"{pagamento.id}"] = pagamento
+            pagamento: Pagamento = Pagamento(len(ingressos), form.meias.data)
+            payments[f"{pagamento.id}"]: Pagamento = pagamento
             return redirect(url_for('pagamentos', pagamento_id=pagamento.id))
 
     sala.printar_poltronas(id_sessao, horario)
