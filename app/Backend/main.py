@@ -1,10 +1,10 @@
 # Importa tudo que é necessário para o funcionamento do programa
 from app.Backend.filme import Filme
-from app.Backend.helpers import most_empty, lugares_disponiveis, lista_strings_para_string, verificador_input
+from app.Backend.helpers import most_empty, lugares_disponiveis, lista_strings_para_string, verificador_input, store_objects, load_objects
 from app.Backend.sessao import Sessao
-from app.Backend.sala import salas
+from app.Backend.sala import Sala
 from app.Backend.pagamento import Pagamento
-
+import pickle
 # Importa tudo que é necessário para o funcionamento do programa
 # from filme import Filme
 # from helpers import most_empty, lugares_disponiveis, lista_strings_para_string, verificador_input
@@ -12,20 +12,24 @@ from app.Backend.pagamento import Pagamento
 # from sala import salas
 # from pagamento import Pagamento
 
+# Cria duas salas
+salas= store_objects([Sala(), Sala()], "salas.pkl")
 
 # Lista de pagamentos (usar para mostrar o total faturado para o administrador)
-pagamentos = []
+pagamentos = store_objects([], "pagamentos.pkl")
 
 # Listas de sessoes e filmes
-sessoes = [Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '20:00']), Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, True, ['11:00', '20:00']), Sessao('MIB', ['Romance'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '23:00'])]
+sessoes = store_objects([Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '20:00']), Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, True, ['11:00', '20:00']), Sessao('MIB', ['Romance'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '23:00'])], "sessoes.pkl")
+
 salas[0].adicionar_sessao(sessoes[0])
 salas[0].adicionar_sessao(sessoes[1])
 salas[1].adicionar_sessao(sessoes[2])
-filmes = [Filme("O Senhor dos Aneis", ["aventura"], 5.5, 'Muitas emoções', 'https://'), Filme("MIB", ["Romance"], 5.5, 'Muitas emoções', 'https://')]
-# print("SESSOES", sessoes)
+print(list(load_objects("salas.pkl")))
+salas = store_objects(salas, "salas.pkl")
+print(list(load_objects("salas.pkl")))
+filmes = store_objects([Filme("O Senhor dos Aneis", ["aventura"], 5.5, 'Muitas emoções', 'https://'), Filme("MIB", ["Romance"], 5.5, 'Muitas emoções', 'https://')], "filmes.pkl")
+
 # Função que preenche as poltronas de uma sala
-
-
 def preencher_poltronas(sala_mais_vazia, quantidade_ingressos, id, horario):
     # Deixar o usuário escolher as poltronas
     poltronas_a_preencher = input(

@@ -3,9 +3,9 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.Backend.sessao import Sessao
 from app.forms import AdminLoginForm, CompraForm
-from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia
+from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas
 from app.Backend.helpers import most_empty
-from app.Backend.sala import salas, letras
+from app.Backend.sala import letras
 from app.Backend.pagamento import Pagamento
 
 payments: Dict[str, Pagamento] = {}
@@ -64,13 +64,13 @@ def poltronas(id_sessao, horario):
 @app.route('/pagamentos/<pagamento_id>', methods=['GET', 'POST'])
 def pagamentos(pagamento_id):
     print(payments)
-    valor_total = payments[pagamento_id].valor
+    valor_total: float = payments[pagamento_id].valor
     return render_template('pagamentos.html', title='Pagamentos', valor_total=valor_total)
 
 
 @app.route('/adminLogin', methods=['GET', 'POST'])
 def adminLogin():
-    form = AdminLoginForm()
+    form: AdminLoginForm = AdminLoginForm()
     if form.validate_on_submit():
         if form.password.data == "adminadmin":
             # flash(" ", "class")

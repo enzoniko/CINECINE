@@ -1,3 +1,4 @@
+import pickle
 # Função lista_strings_para_string: recebe uma lista de strings e retorna uma string com todas as strings separadas por vírgula
 def lista_strings_para_string(lista):
     return ", ".join(lista)
@@ -50,6 +51,38 @@ def verificador_input(coisa, lista, condicao, mensagem_erro):
 
             print(mensagem_erro)
 
+def save_object(obj: callable, filename: str):
+    with open(filename, 'wb') as output:
+        pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+
+def load_object(filename: str):
+    with open(filename, 'rb') as input:
+        return pickle.load(input)
+
+def save_objects(objs: list, filename: str):
+    with open(filename, 'wb') as output:
+        for obj in objs:
+            pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+
+def load_objects(filename: str):
+    with open(filename, 'rb') as input:
+        while True:
+            try:
+                yield pickle.load(input)
+            except EOFError:
+                break
+
+def store_objects(objs: list, filename: str):
+    save_objects(objs, filename)
+    return list(load_objects(filename))
+
+def update_objects(new_objs: list, filename: str):
+    old_objects = list(load_objects(filename))
+    old_objects.extend(new_objs)
+    save_objects(old_objects, filename)
+    return list(load_objects(filename))
+
+        
 # FAILED ATTEMPT TO AUTOMATE GETTERS AND SETTERS
 # def automatic_getters_and_setters(original_class):
 #     privateatributeslist = [name for name, _ in original_class.__dict__.items() if name.startswith("_") and not name.startswith("__")]
