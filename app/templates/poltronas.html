@@ -3,11 +3,11 @@
     <br>
     <div>
         {% if sessao %}
-            <p> {{ sessao.get_nome() }} </p>
-            <p> {{ sessao.get_generos() }} </p>
+            <p> {{ sessao.nome }} </p>
+            <p> {{ sessao.generos }} </p>
             <p> {{ horario }} </p>
-            <p> {{ sessao.get_legenda() }} </p>
-            <p> {{ sessao.get_DDD() }} </p>
+            <p> {{ sessao.legenda }} </p>
+            <p> {{ sessao.DDD }} </p>
         {% else %}
             <p> There are no movies to watch! </p>
         {% endif %}

@@ -17,12 +17,12 @@ from app.Backend.pagamento import Pagamento
 pagamentos = []
 
 # Listas de sessoes e filmes
-sessoes = [Sessao(nome='O Senhor dos Aneis', generos=['aventura'], horarios=['15:00', '20:00'], DDD=False, legenda=False), Sessao(nome='O Senhor dos Aneis', generos=['aventura'], horarios=['11:00', '23:00'], DDD=True, legenda=True), Sessao(nome='MIB', generos=['aventura'], horarios=['15:00', '20:00'], DDD=False, legenda=False)]
+sessoes = [Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '20:00']), Sessao('O Senhor dos Aneis', ['aventura'], 5.5, 'Muitas emoções', 'https://', False, True, ['11:00', '20:00']), Sessao('MIB', ['Romance'], 5.5, 'Muitas emoções', 'https://', False, False, ['15:00', '23:00'])]
 salas[0].adicionar_sessao(sessoes[0])
 salas[0].adicionar_sessao(sessoes[1])
 salas[1].adicionar_sessao(sessoes[2])
-filmes = [Filme(nome="O Senhor dos Aneis", generos=["aventura"]), Filme(nome="MIB", generos=["aventura"])]
-
+filmes = [Filme("O Senhor dos Aneis", ["aventura"], 5.5, 'Muitas emoções', 'https://'), Filme("MIB", ["Romance"], 5.5, 'Muitas emoções', 'https://')]
+# print("SESSOES", sessoes)
 # Função que preenche as poltronas de uma sala
 
 
@@ -90,15 +90,15 @@ def printar_sessoes(filme):
     print(f"Sessões de {filme.upper()}: ")
     print()
     # Pra cada sessão da lista de sessões cujo nome do .get_nome() é o mesmo que o usuário deseja assistir
-    for sessao in range(len([sessao for sessao in sessoes if sessao.get_nome() == filme])):
+    for sessao in range(len([sessao for sessao in sessoes if sessao.nome == filme])):
         print(f"{sessao + 1}: ", end="")
         # Mostra a sessão
         sessao = sessoes.index(
-            [sessao for sessao in sessoes if sessao.get_nome() == filme][sessao])
+            [sessao for sessao in sessoes if sessao.nome == filme][sessao])
         sessoes[sessao].print_info()
         print()
     print('-----------------------------------------------------')
-    return [(sessoes.index(sessao), sessao) for sessao in [sessao for sessao in sessoes if sessao.get_nome() == filme]]
+    return [(sessoes.index(sessao), sessao) for sessao in [sessao for sessao in sessoes if sessao.nome == filme]]
 
 # Função que mostra a sessão escolhida e opcionalmente seus horárioss
 
@@ -107,14 +107,14 @@ def mostrar_sessao(numero_da_sessao, mostrar_horarios=False):
     print()
     # Mostra a sessão
     # Mostra o nome
-    print(sessoes[numero_da_sessao - 1].get_nome().upper(), end=' ')
+    print(sessoes[numero_da_sessao - 1].nome.upper(), end=' ')
     # Mostra se é legando ou não
-    if sessoes[numero_da_sessao - 1].get_legenda() == True:
+    if sessoes[numero_da_sessao - 1].legenda == True:
         print("LEGENDADO", end=' ')
     else:
         print("DUBLADO", end=' ')
     # Mostra se é 3D ou não
-    if sessoes[numero_da_sessao - 1].get_DDD() == True:
+    if sessoes[numero_da_sessao - 1].DDD == True:
         print("3D", end=' ')
     else:
         print("2D", end=' ')
@@ -125,9 +125,9 @@ def mostrar_sessao(numero_da_sessao, mostrar_horarios=False):
         # Mostra os horários da sessão
         print("Horários: ")
         print()
-        for horario in range(len(sessoes[numero_da_sessao - 1].get_horarios())):
+        for horario in range(len(sessoes[numero_da_sessao - 1].horarios)):
             print(f"{horario + 1}: ", end="")
-            print(sessoes[numero_da_sessao - 1].get_horarios()[horario])
+            print(sessoes[numero_da_sessao - 1].horarios[horario])
             print()
         print('-----------------------------------------------------')
 
@@ -137,17 +137,13 @@ def mostrar_sessao(numero_da_sessao, mostrar_horarios=False):
 def sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, sessao):
     # Printar as poltronas da sala mais vazia que passa a sessão escolhida para o usuário escolher as poltronas
     print("Poltronas: ")
+    print(sessao)
     for sala in salas:
-        for horario in sessao.get_horarios():
-            if (
-                sessao in sala.get_sessoes()
-                and lugares_disponiveis(
-                    sala.get_cronograma()[f"{sessao.get_id()} {horario}"]
-                )
-                == quantidade_lugares_disponiveis_sala_mais_vazia
-            ):
-                sala.printar_poltronas(sessao.get_id(), horario)
+        for horario in sessao.horarios:
+            if sessao in sala.sessoes and lugares_disponiveis(sala.cronograma[f"{sessao.id} {horario}"]) == quantidade_lugares_disponiveis_sala_mais_vazia:
+                sala.printar_poltronas(sessao.id, horario)
                 return sala
+            
 
 # Função que printa o comprovante de compra
 
@@ -175,14 +171,14 @@ def mostra_sessoes_de_cada_sala(printar_indice=False):
         print(f"Sala {sala + 1}:")
         print()
         # Se a sala está vazia (sem sessões) é printado um aviso
-        if salas[sala].get_sessoes() == []:
+        if salas[sala].sessoes == []:
             print("Nenhuma sessão cadastrada")
             print()
         # Se a sala tem sessões
-        for sessao in salas[sala].get_sessoes():
+        for sessao in salas[sala].sessoes:
             for s in range(len(sessoes)):
                 # Então verifica qual sessão é pelo id e printa
-                if sessoes[s].get_id() == sessao.get_id():
+                if sessoes[s].id == sessao.id:
                     if printar_indice:
                         print(f"Opção {s + 1} : ")
                     # Printa a sessão com as informações
@@ -242,8 +238,7 @@ def excluir_sessao():
     for sala in salas:
         sala.remover_sessao(sessoes[numero_da_sessao - 1])
 
-    filmes.pop(filmes.index([filme for filme in filmes if filme.get_nome(
-    ) == sessoes[numero_da_sessao - 1].get_nome()][0]))
+    filmes.pop(filmes.index([filme for filme in filmes if filme.nome == sessoes[numero_da_sessao - 1].nome][0]))
     sessoes.pop(numero_da_sessao - 1)
 
 # Função que adiciona uma nova sessão
@@ -257,7 +252,7 @@ def adicionar_sessao():
         "da sala (pra por a sessão)", salas, 'in', "Opção inválida!")
     # Se existir, a sessão é adicionada na sala e é criado um filme com as informações da sessão
     salas[numero_da_sala - 1].adicionar_sessao(sessoes[-1])
-    filmes.append(Filme(sessoes[-1].get_nome(), sessoes[-1].get_generos()))
+    filmes.append(Filme(sessoes[-1].nome, sessoes[-1].generos))
 
 # Função do pagamento
 
@@ -266,7 +261,7 @@ def pagamento(quantidade_ingressos, quantidade_meias, numero_da_sessao, horario,
     # Inicia o pagamento
     pagamento = Pagamento(quantidade_ingressos, quantidade_meias)
     # Mostrar o preço total
-    print(f"Preço total: R$ {pagamento.get_valor()}")
+    print(f"Preço total: R$ {pagamento.valor}")
     # Pergunta se o usuário deseja pagar com crédito, dinheiro ou débito
     print("Forma de pagamento:\n1 - Crédito\n2 - Débito\n3 - Dinheiro")
     # Formas de pagamento
@@ -304,10 +299,10 @@ def pagamento(quantidade_ingressos, quantidade_meias, numero_da_sessao, horario,
             print("Compra cancelada!")
             # Esvazia as poltronas escolhidas pelo usuário
             sala.esvaziar_poltronas(
-                poltronas_escolhidas, sessoes[numero_da_sessao - 1].get_id(), horario)
+                poltronas_escolhidas, sessoes[numero_da_sessao - 1].id, horario)
             # Printa a sala depois de esvaziar as poltronas
             sala.printar_poltronas(
-                sessoes[numero_da_sessao - 1].get_id(), horario)
+                sessoes[numero_da_sessao - 1].id, horario)
             print("-----------------------------------------------------")
             break
 
@@ -316,7 +311,7 @@ def pagamento(quantidade_ingressos, quantidade_meias, numero_da_sessao, horario,
 def mostrar_cronograma_de_uma_sala():
     numero_da_sala = verificador_input(
         "da sala (pra ver o cronograma)", salas, 'in', "Opção inválida!")
-    if len(salas[numero_da_sala - 1].get_sessoes()) == 0:
+    if len(salas[numero_da_sala - 1].sessoes) == 0:
         print("Não há sessões nessa sala!")
     salas[numero_da_sala - 1].print_info()
 
@@ -329,19 +324,18 @@ def total_faturado():
         print("Não existem pagamentos cadastrados")
     else:
         # É somado cada um dos pagamentos
-        total = sum(pagamento.get_valor()
-                    for pagamento in pagamentos)
+        total = sum(pagamento.valor for pagamento in pagamentos)
         # Printa do valor total faturado
         print(f"Total faturado: R$ {total:.2f}")
         print(
             # Printa a quantidade de ingressos totais vendidos
-            f"Quantidade total de ingressos vendidos: {sum(pagamento.get_ingressos() for pagamento in pagamentos)}")
+            f"Quantidade total de ingressos vendidos: {sum(pagamento.ingressos for pagamento in pagamentos)}")
         print(
             # Printa apenas a quantidade dos ingressos vendidos com o valor original
-            f"Quantidade de ingressos inteiros vendidos: {sum(pagamento.get_ingressos() - pagamento.get_meias() for pagamento in pagamentos)}")
+            f"Quantidade de ingressos inteiros vendidos: {sum(pagamento.ingressos - pagamento.meias for pagamento in pagamentos)}")
         print(
             # Printa apenas a quantidade dos ingressos vendidos pela metade do preço
-            f"QUantidade de meia-entradas vendidas: {sum(pagamento.get_meias() for pagamento in pagamentos)}")
+            f"QUantidade de meia-entradas vendidas: {sum(pagamento.meias for pagamento in pagamentos)}")
 
     print()
 
@@ -405,26 +399,26 @@ def usuario():
         "do filme", filmes, "in", "Opção inválida")
 
     # Pega o nome do filme relacionado com o número digitado pelo usuário
-    nome_do_filme = filmes[numero_do_filme - 1].get_nome()
+    nome_do_filme = filmes[numero_do_filme - 1].nome
 
     # Printa a lista de sessões do filme
     printar_sessoes(nome_do_filme)
 
     # Pergunta qual a sessão que o usuário deseja assistir
     numero_da_sessao = verificador_input(
-        "da sessão", [sessao for sessao in sessoes if sessao.get_nome() == nome_do_filme], "in", "Opção inválida")
+        "da sessão", [sessao for sessao in sessoes if sessao.nome == nome_do_filme], "in", "Opção inválida")
     numero_da_sessao = sessoes.index(
-        [sessao for sessao in sessoes if sessao.get_nome() == nome_do_filme][numero_da_sessao - 1]) + 1
+        [sessao for sessao in sessoes if sessao.nome == nome_do_filme][numero_da_sessao - 1]) + 1
     # Mostra a sessão escolhida e seus horários
     mostrar_sessao(numero_da_sessao, mostrar_horarios=True)
 
     # Pergunta qual o horário que o usuário deseja assistir
     numero_do_horario = verificador_input(
-        "do horário", sessoes[numero_da_sessao - 1].get_horarios(), "in", "Opção inválida")
+        "do horário", sessoes[numero_da_sessao - 1].horarios, "in", "Opção inválida")
 
     # Pega o horário relacionado com o número digitado pelo usuário
     horario = sessoes[numero_da_sessao -
-                      1].get_horarios()[numero_do_horario - 1]
+                      1].horarios[numero_do_horario - 1]
 
     # Mostra a sessão escolhida
     mostrar_sessao(numero_da_sessao)
@@ -437,11 +431,11 @@ def usuario():
     quantidade_lugares_disponiveis_sala_mais_vazia = most_empty(
         [
             [
-                sala.get_cronograma()[
-                    f"{sessoes[numero_da_sessao - 1].get_id()} {horario}"
+                sala.cronograma[
+                    f"{sessoes[numero_da_sessao - 1].id} {horario}"
                 ]
-                for sessao in sala.get_sessoes()
-                if sessao.get_id() == sessoes[numero_da_sessao - 1].get_id()
+                for sessao in sala.sessoes
+                if sessao.id == sessoes[numero_da_sessao - 1].id
             ]
             for sala in salas
         ]
@@ -461,10 +455,10 @@ def usuario():
 
     # Preenche as poltronas da sala mais vazia com as poltronas escolhidas pelo usuário
     poltronas_escolhidas = preencher_poltronas(
-        sala, quantidade_ingressos, sessoes[numero_da_sessao - 1].get_id(), horario)
+        sala, quantidade_ingressos, sessoes[numero_da_sessao - 1].id, horario)
 
     # Printa a sala depois de preencher as poltronas
-    sala.printar_poltronas(sessoes[numero_da_sessao - 1].get_id(), horario)
+    sala.printar_poltronas(sessoes[numero_da_sessao - 1].id, horario)
     print("-----------------------------------------------------")
 
     # Chama a função pagamento
