@@ -1,6 +1,7 @@
 # Importa a função lista_strings_para_string do módulo helpers
 
 from dataclasses import dataclass, field
+from typing import List
 from app.Backend.helpers import lista_strings_para_string
 
 
@@ -12,7 +13,7 @@ from app.Backend.helpers import lista_strings_para_string
 @dataclass
 class Filme:
     nome: str = ""
-    generos: list[str] = field(default_factory=list)
+    generos: List[str] = field(default_factory=list)
     classification: float = 0.0
     description: str = ""
     imagem: str = ""
@@ -22,5 +23,3 @@ class Filme:
         print(self.nome, end=" (")
         print(lista_strings_para_string(self.generos), end=")\n")
 
-# f = Filme("O Poderoso Chefão", ["Drama", "Crime"], "https://www.imdb.com/title/tt0068646/mediaviewer/rm1776027136")
-# f.print_info()

@@ -29,18 +29,18 @@ def poltronas(id_sessao, horario):
     quantidade_lugares_disponiveis_sala_mais_vazia = most_empty(
         [
             [
-                sala.get_cronograma()[
+                sala.cronograma[
                     f"{id_sessao} {horario}"
                 ]
-                for sessao in sala.get_sessoes()
-                if sessao.id == id_sessao
+                for sessao in sala.sessoes
+                if sessao.id == int(id_sessao)
             ]
             for sala in salas
         ]
     )
 
     sala = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
-    poltronas = sala.get_cronograma()[f"{id_sessao} {horario}"]
+    poltronas = sala.cronograma[f"{id_sessao} {horario}"]
     poltronas = [poltronas[i-1][::-1] for i in range(len(poltronas), 0, -1)]
     form = CompraForm()
     if form.validate_on_submit():
@@ -63,7 +63,7 @@ def poltronas(id_sessao, horario):
 @app.route('/pagamentos/<pagamento_id>', methods=['GET', 'POST'])
 def pagamentos(pagamento_id):
     print(payments)
-    valor_total = payments[pagamento_id].get_valor()
+    valor_total = payments[pagamento_id].valor
     return render_template('pagamentos.html', title='Pagamentos', valor_total=valor_total)
 
 
@@ -74,7 +74,7 @@ def adminLogin():
         if form.password.data == "adminadmin":
             # flash(" ", "class")
             flash("Admin logged in successfully!")
-            return redirect(url_for('home'))
+            return redirect(url_for('escolha_do_filme'))
         else:
             flash("Login unsuccessful. Please check username and password")
     return render_template('adminLogin.html', title="Admin Login", form=form)
