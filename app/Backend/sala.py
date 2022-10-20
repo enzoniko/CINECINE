@@ -29,17 +29,17 @@ class Sala:
     def preencher_poltronas(self, poltronas, id, horario):
 
         # Lista de letras erradas
-        letras_erradas = []
+        letras_erradas: List[str] = []
         # Lista de números errados
-        numeros_errados = []
+        numeros_errados: List[int] = []
         # Lista de poltronas indisponiveis
-        poltronas_indisponiveis = []
+        poltronas_indisponiveis: List[str] = []
         # Pra cada poltronas na lista de poltronas a serem preenchidas
         for poltrona in poltronas:
             # Pega a letra da poltrona
-            letra = poltrona[0]
+            letra: str = poltrona[0]
             # Pega o número da poltrona
-            numero = int(poltrona[1:])
+            numero: int = int(poltrona[1:])
             # Caso as poltronas sejam inválidas adiciona às listas de erradas
             if letra not in letras:
                 letras_erradas.append(letra)
@@ -67,17 +67,17 @@ class Sala:
         # Pra cada poltronas na lista de poltronas a serem preenchidas
         for poltrona in poltronas:
             # Pega a letra da poltrona
-            letra = poltrona[0]
+            letra: str = poltrona[0]
             # Pega o número da poltrona
-            numero = int(poltrona[1:])
+            numero: int = int(poltrona[1:])
             # Pega o índice da letra na lista de letras
             indice = letras.index(letra)
             # Faz uma cópia da linha de índice "incide" da matriz de poltronas
-            linha = self.cronograma[f"{id} {horario}"][indice][:]
+            linha: List[int] = self.cronograma[f"{id} {horario}"][indice][:]
             # Substitui o número da poltrona pelo valor 1
-            linha[numero - 1] = 1
+            linha[numero - 1]: int = 1
             # Atualiza a linha na matriz de poltronas
-            self.cronograma[f"{id} {horario}"][indice] = linha
+            self.cronograma[f"{id} {horario}"][indice]: List[int] = linha
 
         # Retorna nenhuma lista de erradas
         return []
@@ -88,17 +88,17 @@ class Sala:
         # Pra cada poltronas na lista de poltronas a serem removidas
         for poltrona in poltronas:
             # Pega a letra da poltrona
-            letra = poltrona[0]
+            letra: str = poltrona[0]
             # Pega o número da poltrona
-            numero = int(poltrona[1:])
+            numero: int = int(poltrona[1:])
             # Pega o índice da letra na lista de letras
-            indice = letras.index(letra)
+            indice: int = letras.index(letra)
             # Faz uma cópia da linha de índice "incide" da matriz de poltronas
-            linha = self.cronograma[f"{id} {horario}"][indice][:]
+            linha: List[int] = self.cronograma[f"{id} {horario}"][indice][:]
             # Substitui o número da poltrona pelo valor 0
-            linha[numero - 1] = 0
+            linha[numero - 1]: int = 0
             # Atualiza a linha na matriz de poltronas
-            self.cronograma[f"{id} {horario}"][indice] = linha
+            self.cronograma[f"{id} {horario}"][indice]: List[int] = linha
 
     def printar_poltronas(self, id, horario):
         # Printa a numeração das colunas
@@ -187,9 +187,3 @@ class Sala:
                         sessao.print_info()
 
 
-# Exemplo de lista de salas
-sala1 = Sala()
-
-sala2 = Sala()
-
-salas = [sala1, sala2]
