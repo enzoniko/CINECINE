@@ -1,12 +1,8 @@
 <header class="home">
     <nav>
-        <div>
-            <h1 class="nome_marca">CINECINE</h1>
-        </div>
-        <div class="header">
-            {% extends "layout.html" %}
-            {% block content %} 
-        </div>
+        <h1 class="nome_marca">CINECINE</h1>
+        {% extends "layout.html" %}
+        {% block content %}
     </nav>
 </header>
 <main>
@@ -19,23 +15,24 @@
                     </div>
                     <div class="cartaz_info">
                         <div class="titulo_filme">
-                            <h2> {{ filme }} </h2>
+                            <h1> {{ filme }} </h1>
                         </div>
+                        <div class="conteudo_filme">
                         {% for sessao in sessions[filme] %}
                             {% for i in range(sessao|length) %}
                                 {% if i == 0 %}
                                     {% for element in sessao[i] %}
-                                        <p> {{ element }} </p>
+                                        <p class="genero"> {{ element }} </p>
                                     {% endfor %}
                                 {% elif i == 1 %}
                                     {% if sessao[i] == True and sessao[i + 1] == True %}
-                                        <p>3D - LEG</p>
+                                        <p class="tipo">3D - LEG</p>
                                     {% elif sessao[i] == True and sessao[i + 1] == False %}
-                                        <p>3D - DUB</p>
+                                        <p class="tipo">3D - DUB</p>
                                     {% elif sessao[i] == False and sessao[i + 1] == True %}
-                                        <p>2D - LEG</p>
+                                        <p class="tipo">2D - LEG</p>
                                     {% else %}
-                                        <p>2D - DUB</p>
+                                        <p class="tipo">2D - DUB</p>
                                     {% endif %}
                                 {% elif i == 3 %}
                                     {% for horario in sessao[i] %}
@@ -45,6 +42,7 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
+                    </div>
                     </div>
                 </div>
             {% endfor %}

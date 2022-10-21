@@ -9,13 +9,23 @@
 }
 body{
     background-color: #000;
-    max-width: 980px;
     margin: 0 auto;
+}
+
+.home{
+    width: 100%;
+    background-color: #BB0000;
+}
+
+main , nav{
+    max-width: 980px;
+    margin: 0 auto; 
 }
 
 h1{
     font-weight: 400;
     line-height: 78px;
+    float: left;
 }
 
 h2{
@@ -29,29 +39,29 @@ p {
 }
 
 header{
-    background-color: #BB0000;
     font-weight: 400;
     font-size: 32px;
     width: 100%;
 }
 
-.header{
+header nav{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    text-align: center; 
 }
 
 .nome_marca{
-    padding-right: 30px;
+    width: 72%;
 }
 
-.header a{
-    margin: 0 15px;
+.botao_admin{
+    margin-left: 20px;
+}
+
+header a{
+    margin-left: 29px;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 24px;
+    font-size: 22px;
 }
 
 img{
@@ -64,17 +74,13 @@ img{
 }
 
 .cartaz_info a{
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 8px 16px;
+    margin: 3px;
 }
 
 header p{
     text-decoration: none;
     color: #fff;
-}
-
-.home{
-    margin: 0px 0px 30px 10px;
 }
 
 nav{
@@ -86,9 +92,10 @@ nav{
 main a{
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 12px;
-    transition: 0.5s;
+    letter-spacing: 1px;
+    font-size: 14px;
+    line-height: 60px;
+    transition: 0.2s;
     border: #BB0000 solid 2px;
     border-radius: 8px;
 }
@@ -100,21 +107,56 @@ main a:hover{
     transition-delay: 0.1s ;
 }
 
-.cartaz{
+main h1{
+    line-height: 0px;
+    text-transform: uppercase;
+}
+
+.tipo, .genero{
+    width: 15%;
+    padding: 8px 16px;
+    margin: 3px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    border: #BB0000 solid 2px;
+    border-radius: 8px;
+    margin: 10px 0px 0px 0px;
+}
+
+.tipo{
+    background-color: #BB0000;
+    border: #BB0000 solid 2px;
+    width: 15%;
+}
+
+.genero{
+    border: #ffffff solid 1px;
+}
+
+.titulo_filme{
+    width: 100%;
+    height: 9%;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 40px;
+}
+
+.conteudo_filme{
+    width: 100%;
+    height: 90%;
+}
+
+.cartaz{
+    width: 100%;
+    display: flex;
+    margin:64px 0px 0px 0px;
 }
 
 .cartaz_info{
+    width: 80%;
     display: flex;
-    margin: 20px;
+    margin: 0px 0px 0px 20px;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: start;
 }
 
 .info p{
@@ -137,5 +179,4 @@ input{
 #submit{
     width: 100px;
     color: #000;
-
 }
