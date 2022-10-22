@@ -18,7 +18,7 @@ def escolha_do_filme():
            
             sessions[sessao.nome]: list = []
             for each in [s for s in sessoes if s.nome == sessao.nome]:
-                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id]
+                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id, each.classificacao, each.description, each.imagem]
                 sessions[sessao.nome].append(new)
 
     return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes, sessions=sessions, sessoes=sessoes)

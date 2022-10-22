@@ -11,36 +11,35 @@
             {% for filme in sessions %}
                 <div class="cartaz">
                     <div class="cartaz_imagem">
-                        <img src="../static/img/senhordosaneis.jpg">
+                        <img src={{ sessions[filme][0][7] }}>
                     </div>
                     <div class="cartaz_info">
                         <div class="titulo_filme">
                             <h1> {{ filme }} </h1>
                         </div>
+                        <p> {{ sessions[filme][0][5] }} </p>
+                        {% for element in sessions[filme][0][0] %}
+                            <p class="genero"> {{ element }} </p>
+                        {% endfor %}
+                            
+                        <p> {{ sessions[filme][0][6] }} </p>
                         <div class="conteudo_filme">
                         {% for sessao in sessions[filme] %}
-                            {% for i in range(sessao|length) %}
-                                {% if i == 0 %}
-                                    {% for element in sessao[i] %}
-                                        <p class="genero"> {{ element }} </p>
-                                    {% endfor %}
-                                {% elif i == 1 %}
-                                    {% if sessao[i] == True and sessao[i + 1] == True %}
-                                        <p class="tipo">3D - LEG</p>
-                                    {% elif sessao[i] == True and sessao[i + 1] == False %}
-                                        <p class="tipo">3D - DUB</p>
-                                    {% elif sessao[i] == False and sessao[i + 1] == True %}
-                                        <p class="tipo">2D - LEG</p>
-                                    {% else %}
-                                        <p class="tipo">2D - DUB</p>
-                                    {% endif %}
-                                {% elif i == 3 %}
-                                    {% for horario in sessao[i] %}
-                                        <a href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
-                                    {% endfor %}
-                                {% elif i == 4 %}
-                                {% endif %}
+                            
+                            {% if sessao[1] == True and sessao[2] == True %}
+                                <p class="tipo">3D - LEG</p>
+                            {% elif sessao[1] == True and sessao[2] == False %}
+                                <p class="tipo">3D - DUB</p>
+                            {% elif sessao[1] == False and sessao[2] == True %}
+                                <p class="tipo">2D - LEG</p>
+                            {% else %}
+                                <p class="tipo">2D - DUB</p>
+                            {% endif %}
+
+                            {% for horario in sessao[3] %}
+                                <a href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
                             {% endfor %}
+                                   
                         {% endfor %}
                     </div>
                     </div>
