@@ -4,9 +4,10 @@ from app import app
 from app.Backend.sessao import Sessao
 from app.forms import AdminLoginForm, CompraForm
 from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos
-from app.Backend.helpers import most_empty, store_objects
+from app.Backend.helpers import most_empty, store_objects, lista_strings_para_string
 from app.Backend.sala import letras
 from app.Backend.pagamento import Pagamento
+import qrcode
 
 payments: Dict[str, Pagamento] = {}
 @app.route('/', methods=['GET', 'POST'])
@@ -25,7 +26,7 @@ def escolha_do_filme():
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
 def poltronas(id_sessao, horario):
-    session: List[Sessao] = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
+    session: Sessao = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
     ingressos: List[str] = request.form.getlist('poltronas')
     quantidade_lugares_disponiveis_sala_mais_vazia: int = most_empty(
         [
@@ -53,24 +54,24 @@ def poltronas(id_sessao, horario):
             poltronas_a_preencher: List[str] = [letras[::-1][:len(poltronas)][int(ingressos[i].split()[0])]+[str(x+1) for x in range(len(poltronas[0]))][::-1][int(ingressos[i].split()[1])] for i in range(len(ingressos))]
             sala.preencher_poltronas(poltronas_a_preencher, id_sessao, horario)
             flash(f'Você comprou {len(ingressos)} ingressos e {form.meias.data} meias-entradas.')
-            pagamento: Pagamento = Pagamento(len(ingressos), form.meias.data)
+            pagamento: Pagamento = Pagamento(len(ingressos), form.meias.data, forma=form.maneira.data)
             payments[f"{pagamento.id}"]: Pagamento = pagamento
             pagamentos.append(pagamento)
             store_objects(pagamentos, 'app/storage/pagamentos.pkl')
             store_objects(salas, 'app/storage/salas.pkl')
-            
     
-            return redirect(url_for('pagamento', pagamento_id=pagamento.id))
+            return redirect(url_for('pagamento', pagamento_id=pagamento.id, id_sessao=id_sessao, horario=horario, poltronas=lista_strings_para_string([poltrona.upper() for poltrona in poltronas_a_preencher])))
 
     sala.printar_poltronas(id_sessao, horario)
 
-    return render_template('poltronas.html', title='Sessoes', horario = horario, sessao = session, form=form, poltronas=poltronas)
+    return render_template('poltronas.html', title='Poltronas', letras=letras[::-1][:len(poltronas)], horario = horario, sessao = session, form=form, poltronas=poltronas)
 
-@app.route('/pagamentos/<pagamento_id>', methods=['GET', 'POST'])
-def pagamento(pagamento_id):
-    print(payments)
-    valor_total: float = payments[pagamento_id].valor
-    return render_template('pagamentos.html', title='Pagamentos', valor_total=valor_total)
+@app.route('/pagamentos/<pagamento_id>/<id_sessao>/<horario>/<poltronas>', methods=['GET', 'POST'])
+def pagamento(pagamento_id, id_sessao, horario, poltronas):
+
+    qr = qrcode.make(f"{poltronas} {horario} {id_sessao} {pagamento_id}")
+    qr.save('app/static/qr.png')
+    return render_template('pagamentos.html', title='Pagamentos', horario = horario, sessao = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0], valor_total= payments[pagamento_id].valor, maneira=payments[pagamento_id].forma, poltronas=poltronas)
 
 
 @app.route('/adminLogin', methods=['GET', 'POST'])

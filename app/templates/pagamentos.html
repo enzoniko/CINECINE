@@ -1,9 +1,40 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Confirmar pagamento</h1>
-    <p>Preço total: {{ valor_total }}</p>
-    <br>
+    <p> Obrigado por comprar conosco! </p>
     <div>
-       
+  
+        {% if sessao %}
+            <div class="cartaz_imagem">
+                <img src={{ sessao.imagem }}>
+            </div>
+            <div class="titulo_filme">
+                <h1> {{ sessao.nome }} </h1>
+            </div>
+            <p> {{ sessao.classificacao }} </p>
+            {% for element in sessao.generos %}
+                <p class="genero"> {{ element }} </p>
+            {% endfor %}
+            <p> {{ sessao.description }} </p>
+            <p> {{ horario }} </p>
+            {% if sessao.legenda == True and sessao.DDD == True %}
+                <p class="tipo">3D - LEG</p>
+            {% elif sessao.legenda == True and sessao.DDD == False %}
+                <p class="tipo">3D - DUB</p>
+            {% elif sessao.legenda == False and sessao.DDD == True %}
+                <p class="tipo">2D - LEG</p>
+            {% else %}
+                <p class="tipo">2D - DUB</p>
+            {% endif %}
+        {% else %}
+            <p> There are no movies to watch! </p>
+        {% endif %}
     </div>
+    <p>Sua compra:</p>
+    <p>Preço total: {{ valor_total }}</p>
+    <p>Forma: {{ maneira }}</p>
+    <p>Horário: {{ horario }}</p>
+    <p>Poltronas: {{ poltronas }}</p>
+    <p> Guarde esse QRCODE para entrar na sala: </p>
+    <img src="{{url_for('static', filename='qr.png')}}">
+    
 {% endblock content %}
