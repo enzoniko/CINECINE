@@ -21,6 +21,7 @@ class Sessao(Filme):
     id: int = 0
 
     def __post_init__(self):
+        super().__post_init__()
         self.id = randint(0, 1000000)
     # print_info imprime os informações da sessão
     def print_info(self):
