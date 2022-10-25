@@ -29,7 +29,6 @@ class Filme:
             return
         self.nome = search.original_title
         self.description = search.overview
-        self.classificacao = '+18' if search.adult else '+12'
         self.imagem = f'https://image.tmdb.org/t/p/original{search.poster_path}'
         movie_id = search.id
         response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={tmdb.api_key}&language=pt-BR')

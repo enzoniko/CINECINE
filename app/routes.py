@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.Backend.sessao import Sessao
 from app.forms import AdminLoginForm, CompraForm
-from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos
+from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos, total_faturado
 from app.Backend.helpers import most_empty, store_objects, lista_strings_para_string
 from app.Backend.sala import letras
 from app.Backend.pagamento import Pagamento
@@ -81,8 +81,20 @@ def adminLogin():
         if form.password.data == "adminadmin":
             # flash(" ", "class")
             flash("Admin logged in successfully!")
-            return redirect(url_for('escolha_do_filme'))
+            return redirect(url_for('adminMenu'))
         else:
             flash("Login unsuccessful. Please check username and password")
     return render_template('adminLogin.html', title="Admin Login", form=form)
 
+@app.route('/adminMenu', methods=['GET', 'POST'])
+def adminMenu():
+    sessions: Dict[str, list] = {}
+    for sessao in sessoes:
+        # print('nome:', sessao.nome)
+        if sessao.nome not in sessions:
+           
+            sessions[sessao.nome]: list = []
+            for each in [s for s in sessoes if s.nome == sessao.nome]:
+                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id, each.classificacao, each.description, each.imagem]
+                sessions[sessao.nome].append(new)
+    return render_template('adminMenu.html', title="Admin Menu", dados_faturamento=total_faturado(), salas=salas,  filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
