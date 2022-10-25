@@ -1,0 +1,5 @@
+flask
+wtflask
+Pillow
+qrcode
+tmdbv3api

@@ -19,7 +19,6 @@ filmes = list(load_objects('app/storage/filmes.pkl')) or store_objects([Filme("O
 
 sessoes = list(load_objects('app/storage/sessoes.pkl')) or store_objects([Sessao(nome = 'O Senhor dos Aneis', legenda = False, DDD = False, horarios = ['15:00', '20:00']), Sessao(nome = 'O Senhor dos Aneis', legenda = False, DDD = False, horarios = ['15:00', '23:00']), Sessao(nome = 'Homens de Preto', legenda = True, DDD = False, horarios = ['22:00', '23:00'])], "app/storage/sessoes.pkl")
 
-print(sessoes)
 if not list(load_objects('app/storage/salas.pkl')):
     salas = [Sala(), Sala()]
     salas[0].adicionar_sessao(sessoes[0])
@@ -328,25 +327,11 @@ def mostrar_cronograma_de_uma_sala():
 
 
 def total_faturado():
-    # Se não existir nenhuma compra confirmada, é printado um aviso
-    if pagamentos == []:
-        print("Não existem pagamentos cadastrados")
-    else:
-        # É somado cada um dos pagamentos
-        total = sum(pagamento.valor for pagamento in pagamentos)
-        # Printa do valor total faturado
-        print(f"Total faturado: R$ {total:.2f}")
-        print(
-            # Printa a quantidade de ingressos totais vendidos
-            f"Quantidade total de ingressos vendidos: {sum(pagamento.ingressos for pagamento in pagamentos)}")
-        print(
-            # Printa apenas a quantidade dos ingressos vendidos com o valor original
-            f"Quantidade de ingressos inteiros vendidos: {sum(pagamento.ingressos - pagamento.meias for pagamento in pagamentos)}")
-        print(
-            # Printa apenas a quantidade dos ingressos vendidos pela metade do preço
-            f"QUantidade de meia-entradas vendidas: {sum(pagamento.meias for pagamento in pagamentos)}")
-
-    print()
+    if pagamentos != []:
+        return {"Valor faturado": f'R$ {sum(pagamento.valor for pagamento in pagamentos)},00', "Total de Ingressos": sum(pagamento.ingressos for pagamento in pagamentos), "Total de Ingressos Inteiros" :sum(pagamento.ingressos - pagamento.meias for pagamento in pagamentos), "Total de Meias-entradas":sum(pagamento.meias for pagamento in pagamentos)}
+    print("Não existem pagamentos cadastrados")
+    return None
+       
 
 # Função do Administrador
 

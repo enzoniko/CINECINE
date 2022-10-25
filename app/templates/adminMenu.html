@@ -1,0 +1,60 @@
+<header class="home">
+    <nav>
+        <h1 class="nome_marca">CINECINE</h1>
+        {% extends "layout.html" %}
+        {% block content %}
+    </nav>
+</header>
+<main>
+    <p>Faturamento do cinema: </p>
+    {% for tipo in dados_faturamento  %}
+        <p> {{tipo}}: {{dados_faturamento[tipo]}} </p>
+    {% endfor %}
+    <a> ADICIONAR NOVA SESSAO </a>
+    <div>
+        
+        {% if sessions %}
+            {% for filme in sessions %}
+                <div class="cartaz">
+                    <div class="cartaz_imagem">
+                        <img src={{ sessions[filme][0][7] }}>
+                    </div>
+                    <div class="cartaz_info">
+                        <div class="titulo_filme">
+                            <h1> {{ filme }} </h1>
+                        </div>
+                        <p> {{ sessions[filme][0][5] }} </p>
+                        {% for element in sessions[filme][0][0] %}
+                            <p class="genero"> {{ element }} </p>
+                        {% endfor %}
+                            
+                        <p> {{ sessions[filme][0][6] }} </p>
+                        <div class="conteudo_filme">
+                        {% for sessao in sessions[filme] %}
+                            <!--href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}" -->
+                            {% if sessao[1] == True and sessao[2] == True %}
+                                <a class="tipo">3D - LEG</a>
+                            {% elif sessao[1] == True and sessao[2] == False %}
+                                <a class="tipo">3D - DUB</a>
+                            {% elif sessao[1] == False and sessao[2] == True %}
+                                <a class="tipo">2D - LEG</a>
+                            {% else %}
+                                <a class="tipo">2D - DUB</a>
+                            {% endif %}
+
+                            {% for horario in sessao[3] %}
+                                <p> {{ horario }} </p>
+                            {% endfor %}
+                                   
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p> There are no movies to watch! </p>
+        {% endif %}
+    </div>
+    {% endblock content %}
+</main>
+
