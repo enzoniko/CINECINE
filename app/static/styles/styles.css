@@ -1,15 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+/*----------------------- GERAL E HOME ----------------------------*/
+
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Century Gothic';
-    color: #FFFFFF;
 }
+
+::-webkit-scrollbar{
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #E7E7E7;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border: #fff solid 1px;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #BB0000;
+  }
+
 body{
     background-color: #000;
-    margin: 0 auto;
+    color:#fff;
+    margin: 0px auto;
 }
 
 .home{
@@ -23,6 +47,7 @@ main , nav{
 }
 
 h1{
+    color: #fff;
     font-weight: 400;
     line-height: 78px;
     float: left;
@@ -39,6 +64,7 @@ p {
 }
 
 header{
+    color: #fff;
     font-weight: 400;
     font-size: 32px;
     width: 100%;
@@ -58,6 +84,7 @@ header nav{
 }
 
 header a{
+    color: #fff;
     margin-left: 29px;
     text-decoration: none;
     text-transform: uppercase;
@@ -89,7 +116,8 @@ nav{
     align-items: center;
 }
 
-main a{
+.horario{
+    color: #fff;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -100,7 +128,7 @@ main a{
     border-radius: 8px;
 }
 
-main a:hover{
+.horario:hover{
     background: #BB0000;
     color: aliceblue;
     box-shadow: 0 0 25px #BB0000;
@@ -163,8 +191,6 @@ main h1{
     background-color: #000;
 }
 
-
-
 input{
     width: 30px;
     height: 30px;
@@ -179,4 +205,42 @@ input{
 #submit{
     width: 100px;
     color: #000;
+}
+
+/*----------------------- POLTRONAS ----------------------------*/
+
+.escolha_poltrona{
+    display: flex;
+    margin: 0px auto;
+}
+
+#form_poltronas{
+    margin: 0px auto;
+}
+
+.a_coluna{
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0px 32px 0px 24px;
+}
+
+.a_linha{
+    color: #fff;
+    font-size: 16px;
+    padding-bottom: 5px;
+    font-weight: 700;
+}
+
+.tela{
+    font-weight: 700;
+    font-size: 20px ;
+    letter-spacing: 10px;
+    margin: 0px 0px 0px 310px;
+}
+
+.check{
+    margin: 10px 10px 10px 10px;
+    width: 45px;
+    height: 45px;
 }
