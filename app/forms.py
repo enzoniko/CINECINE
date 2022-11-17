@@ -1,13 +1,10 @@
 from datetime import datetime
-from email.policy import default
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, PasswordField, BooleanField, IntegerField, SelectField, StringField, FieldList, TimeField
 from wtforms.validators import DataRequired, Length, NumberRange
 
-
 class AdminLoginForm(FlaskForm):
-    password = PasswordField('Password', validators=[
-                             DataRequired(), Length(min=8, max=20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
     submit = SubmitField('Login')
 
 class CompraForm(FlaskForm):
