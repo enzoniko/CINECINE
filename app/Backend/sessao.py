@@ -22,7 +22,10 @@ class Sessao(Filme):
 
     def __post_init__(self):
         super().__post_init__()
-        self.id = randint(0, 1000000)
+        #self.horarios =list(set(self.horarios))
+        if self.id == 0:
+
+            self.id = randint(0, 1000000)
     # print_info imprime os informações da sessão
     def print_info(self):
         # super().print_info()

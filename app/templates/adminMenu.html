@@ -10,7 +10,7 @@
     {% for tipo in dados_faturamento  %}
         <p> {{tipo}}: {{dados_faturamento[tipo]}} </p>
     {% endfor %}
-    <a> ADICIONAR NOVA SESSAO </a>
+    <a href="{{ url_for('editar_sessao', id_sessao = '0') }}"> ADICIONAR NOVA SESSAO </a>
     <div>
         
         {% if sessions %}
@@ -33,13 +33,13 @@
                         {% for sessao in sessions[filme] %}
                             <!--href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}" -->
                             {% if sessao[1] == True and sessao[2] == True %}
-                                <a class="tipo">3D - LEG</a>
+                                <a href="{{ url_for('editar_sessao', id_sessao = sessao[4]) }}" class="tipo">3D - LEG</a>
                             {% elif sessao[1] == True and sessao[2] == False %}
-                                <a class="tipo">3D - DUB</a>
+                                <a href="{{ url_for('editar_sessao', id_sessao = sessao[4]) }}" class="tipo">3D - DUB</a>
                             {% elif sessao[1] == False and sessao[2] == True %}
-                                <a class="tipo">2D - LEG</a>
+                                <a href="{{ url_for('editar_sessao', id_sessao = sessao[4]) }}" class="tipo">2D - LEG</a>
                             {% else %}
-                                <a class="tipo">2D - DUB</a>
+                                <a href="{{ url_for('editar_sessao', id_sessao = sessao[4]) }}" class="tipo">2D - DUB</a>
                             {% endif %}
 
                             {% for horario in sessao[3] %}

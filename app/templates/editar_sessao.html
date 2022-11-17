@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+    <br>
+    <div>
+        {% if sessao %}
+            <div>
+                <form method="POST" action="">
+                    <div class="cartaz_imagem">
+                        <img src={{ sessao.imagem }}>
+                    </div>
+                    {{ form.hidden_tag() }}
+                    <fieldset>
+                        
+                        <div>
+                            <!-- form.something(class = "something to style") -->
+                            {{ form.titulo.label(class="titulo_filme") }}<br>
+                            {% if form.titulo.errors %}
+                                {{ form.titulo() }}
+                                <div>
+                                    {% for error in form.titulo.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.titulo(class="titulo_filme") }}
+                            {% endif %}  
+                        </div>
+                    
+                    </fieldset>
+                    <fieldset>
+                        
+                        <div>
+                            <!-- form.something(class = "something to style") -->
+                            {{ form.classificacao.label(class="classificacao_filme") }}<br>
+                            {% if form.classificacao.errors %}
+                                {{ form.classificacao() }}
+                                <div>
+                                    {% for error in form.classificacao.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.classificacao(class="classificacao_filme") }}
+                            {% endif %}  
+                        </div>
+                    
+                    </fieldset>
+                    
+                    {% for element in sessao.generos %}
+                        <p class="genero"> {{ element }} </p>
+                    {% endfor %}
+                    <p> {{ sessao.description }} </p>
+                    <fieldset>
+                        
+                        <div>
+                            {% for horario in form.horarios %}
+                                <!-- form.something(class = "something to style") -->
+                                {{ horario.label(class="classificacao_filme") }}<br>
+                                {% if horario.errors %}
+                                    {{ horario() }}
+                                    <div>
+                                        {% for error in horario.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ horario(class="classificacao_filme") }}
+                                {% endif %} 
+                            {% endfor %} 
+                        </div>
+                    
+                    </fieldset>
+                    <fieldset>
+                        
+                        <div>
+                            <!-- form.something(class = "something to style") -->
+                            {{ form.legenda.label(class="legenda_filme") }}<br>
+                            {% if form.legenda.errors %}
+                                {{ form.legenda() }}
+                                <div>
+                                    {% for error in form.legenda.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.legenda(class="legenda_filme") }}
+                            {% endif %}  
+                        </div>
+                    
+                    </fieldset>
+                    <fieldset>
+                        
+                        <div>
+                            <!-- form.something(class = "something to style") -->
+                            {{ form.DDD.label(class="DDD_filme") }}<br>
+                            {% if form.DDD.errors %}
+                                {{ form.DDD() }}
+                                <div>
+                                    {% for error in form.DDD.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.DDD(class="DDD_filme") }}
+                            {% endif %}  
+                        </div>
+                    
+                    </fieldset>
+                    
+                
+                    <div>
+                        {{ form.confirmar() }}
+                        {{ form.aplicar() }}
+                        {{ form.cancelar() }}
+                    </div>
+                    
+                </form>
+            </div>
+             
+        {% else %}
+            <p> There are no movies to watch! </p>
+        {% endif %}
+    </div>
+    
+{% endblock content %}
