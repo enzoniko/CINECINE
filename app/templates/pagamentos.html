@@ -1,5 +1,11 @@
-{% extends "layout.html" %}
-{% block content %}
+<header class="home">
+    <nav>
+        <h1 class="nome_marca">CINECINE</h1>
+        {% extends "layout.html" %}
+        {% block content %}
+    </nav>
+</header>
+<main>
     <p> Obrigado por comprar conosco! </p>
     <div>
   
@@ -36,5 +42,5 @@
     <p>Poltronas: {{ poltronas }}</p>
     <p> Guarde esse QRCODE para entrar na sala: </p>
     <img src="{{url_for('static', filename='qr.png')}}">
-    
+ </main>
 {% endblock content %}
