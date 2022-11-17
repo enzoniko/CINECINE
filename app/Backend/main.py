@@ -195,7 +195,7 @@ def mostra_sessoes_de_cada_sala(printar_indice=False):
 # Função que altera uma sessão
 
 
-def alterar_sessao(numero_da_sessao=None):
+def alterar_sessao(numero_da_sessao=None, nome=None, legenda=None, DDD=None, horarios=None):
     # Se não existir nenhuma sessão, é printado um aviso
     if len(sessoes) == 0:
         print("Não existem sessões cadastradas")

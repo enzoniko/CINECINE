@@ -162,12 +162,12 @@ class Sala:
         # Adiciona a sessão à lista de sessões
         self.sessoes.append(sessao)
     # Função que remove sessão da sala (cronograma)
-
+    
     def remover_sessao(self, sessao):
 
         # Remove a sessão do cronograma
         # Pra cada horário da sessão
-        for horario in sessao.horarios():
+        for horario in sessao.horarios:
             # Se a sessão e seu respectivo horário estiverem no cronograma
             if f"{sessao.id} {horario}" in self.cronograma:
                 # Remove a matriz de poltronas do cronograma

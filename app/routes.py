@@ -1,11 +1,13 @@
+from datetime import datetime
+from random import randint
 from typing import Dict, List
 from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.Backend.sessao import Sessao
-from app.forms import AdminLoginForm, CompraForm
-from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos, total_faturado
-from app.Backend.helpers import most_empty, store_objects, lista_strings_para_string
-from app.Backend.sala import letras
+from app.forms import AdminLoginForm, CompraForm, EditarSessaoForm
+from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos, total_faturado, alterar_sessao
+from app.Backend.helpers import load_objects, most_empty, store_objects, lista_strings_para_string
+from app.Backend.sala import Sala, letras
 from app.Backend.pagamento import Pagamento
 import qrcode
 
@@ -19,7 +21,7 @@ def escolha_do_filme():
            
             sessions[sessao.nome]: list = []
             for each in [s for s in sessoes if s.nome == sessao.nome]:
-                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id, each.classificacao, each.description, each.imagem]
+                new: list = [each.generos, each.DDD, each.legenda, each.horarios, each.id, each.classificacao, each.description, each.imagem]
                 sessions[sessao.nome].append(new)
 
     return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
@@ -41,7 +43,7 @@ def poltronas(id_sessao, horario):
         ]
     )
 
-    sala: Sessao = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
+    sala: Sala = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
     poltronas: List[List[int]] = sala.cronograma[f"{id_sessao} {horario}"]
     poltronas: List[List[int]] = [poltronas[i-1][::-1] for i in range(len(poltronas), 0, -1)]
     form: CompraForm = CompraForm()
@@ -95,6 +97,65 @@ def adminMenu():
            
             sessions[sessao.nome]: list = []
             for each in [s for s in sessoes if s.nome == sessao.nome]:
-                new: list = [each.generos, each.legenda, each.DDD, each.horarios, each.id, each.classificacao, each.description, each.imagem]
+                new: list = [each.generos, each.DDD, each.legenda, each.horarios, each.id, each.classificacao, each.description, each.imagem]
                 sessions[sessao.nome].append(new)
     return render_template('adminMenu.html', title="Admin Menu", dados_faturamento=total_faturado(), salas=salas,  filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
+
+@app.route('/editar_sessao/<id_sessao>', methods=['GET', 'POST'])
+def editar_sessao(id_sessao):
+    if id_sessao == '0':
+        print('oi')
+        print(sessoes)
+        print(Sessao().id)
+        sessoes.append(Sessao(nome='-'))
+        print('.>>>>>>>>>>>>>>')
+        print(sessoes[-1])
+        id_sessao = sessoes[-1].id
+   
+    form: EditarSessaoForm = EditarSessaoForm(titulo=[sessao.nome for sessao in sessoes if sessao.id == int(id_sessao)][0], classificacao=[sessao.classificacao for sessao in sessoes if sessao.id == int(id_sessao)][0], horarios={datetime.strptime(horario, '%H:%M'): datetime.strptime(horario, '%H:%M') for horario in [sessao.horarios for sessao in sessoes if sessao.id == int(id_sessao)][0]}, legenda=[sessao.legenda for sessao in sessoes if sessao.id == int(id_sessao)][0], DDD=[sessao.DDD for sessao in sessoes if sessao.id == int(id_sessao)][0])
+
+    
+
+
+    if form.validate_on_submit():
+        print("validou")
+        if form.cancelar.data:
+            sessoes.remove([sessao for sessao in sessoes if sessao.id == int(id_sessao)][0])
+            s = load_objects('app/storage/sessoes.pkl')
+            for sessao in s:
+                if sessao.id == int(id_sessao):
+                    sessoes.append(sessao)
+                    
+            for sessao in sessoes:
+                if sessao.nome == '-':
+                    sessoes.remove(sessao)
+            store_objects(sessoes, 'app/storage/sessoes.pkl')
+            return redirect(url_for('adminMenu'))
+        elif form.aplicar.data:
+            sessoes.remove([sessao for sessao in sessoes if sessao.id == int(id_sessao)][0])
+            sessao = Sessao(nome = form.titulo.data, classificacao=form.classificacao.data, legenda=form.legenda.data, DDD=form.DDD.data, horarios=[str(horario.data)[:5] for horario in form.horarios], id = int(id_sessao))
+            sessoes.append(sessao)
+            for sessao in sessoes:
+                if sessao.nome == '-':
+                    sessoes.remove(sessao)
+            return redirect(url_for('editar_sessao', id_sessao=id_sessao))
+        elif form.confirmar.data:
+
+            sessao_antiga = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0]
+
+            for sala in salas:
+                if sessao_antiga in sala.sessoes:
+                    sala.remover_sessao(sessao_antiga)
+            sessoes.remove(sessao_antiga)
+            sessao = Sessao(nome = form.titulo.data, classificacao=form.classificacao.data, legenda=form.legenda.data, DDD=form.DDD.data, horarios=[str(horario.data)[:5] for horario in form.horarios], id = int(id_sessao))
+            sessoes.append(sessao)
+            salas[randint(0,1)].adicionar_sessao(sessao)
+            for sessao in sessoes:
+                if sessao.nome == '-':
+                    sessoes.remove(sessao)
+            
+            store_objects(sessoes, 'app/storage/sessoes.pkl')
+            store_objects(salas, 'app/storage/salas.pkl')
+            return redirect(url_for('adminMenu'))
+
+    return render_template('editar_sessao.html', title="Editar Sessão", form=form, sessao = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0])

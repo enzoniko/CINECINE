@@ -24,9 +24,9 @@
                 {% if sessao.legenda == True and sessao.DDD == True %}
                     <p class="tipo">3D - LEG</p>
                 {% elif sessao.legenda == True and sessao.DDD == False %}
-                    <p class="tipo">3D - DUB</p>
-                {% elif sessao.legenda == False and sessao.DDD == True %}
                     <p class="tipo">2D - LEG</p>
+                {% elif sessao.legenda == False and sessao.DDD == True %}
+                    <p class="tipo">3D - DUB</p>
                 {% else %}
                     <p class="tipo">2D - DUB</p>
                 {% endif %}
