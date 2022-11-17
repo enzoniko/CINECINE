@@ -1,58 +1,68 @@
-{% extends "layout.html" %}
-{% block content %}
-    <br>
-    <div>
+<header class="home">
+    <nav>
+        <h1 class="nome_marca">CINECINE</h1>
+        {% extends "layout.html" %}
+        {% block content %}
+    </nav>
+</header>
+<main>
+    <div class="cartaz">
         {% if sessao %}
             <div class="cartaz_imagem">
                 <img src={{ sessao.imagem }}>
             </div>
-            <div class="titulo_filme">
-                <h1> {{ sessao.nome }} </h1>
-            </div>
-            <p> {{ sessao.classificacao }} </p>
-            {% for element in sessao.generos %}
-                <p class="genero"> {{ element }} </p>
-            {% endfor %}
-            <p> {{ sessao.description }} </p>
-            <p> {{ horario }} </p>
-            {% if sessao.legenda == True and sessao.DDD == True %}
-                <p class="tipo">3D - LEG</p>
-            {% elif sessao.legenda == True and sessao.DDD == False %}
-                <p class="tipo">3D - DUB</p>
-            {% elif sessao.legenda == False and sessao.DDD == True %}
-                <p class="tipo">2D - LEG</p>
+            <div class="cartaz_info">
+                <div class="titulo_filme">
+                    <h1> {{ sessao.nome }} </h1>
+                </div>
+                <p> {{ sessao.classificacao }} </p>
+                {% for element in sessao.generos %}
+                    <p class="genero"> {{ element }} </p>
+                {% endfor %}
+                <p> {{ sessao.description }} </p>
+                <p> {{ horario }} </p>
+                {% if sessao.legenda == True and sessao.DDD == True %}
+                    <p class="tipo">3D - LEG</p>
+                {% elif sessao.legenda == True and sessao.DDD == False %}
+                    <p class="tipo">3D - DUB</p>
+                {% elif sessao.legenda == False and sessao.DDD == True %}
+                    <p class="tipo">2D - LEG</p>
+                {% else %}
+                    <p class="tipo">2D - DUB</p>
+                {% endif %}
             {% else %}
-                <p class="tipo">2D - DUB</p>
+                <p> There are no movies to watch! </p>
             {% endif %}
-        {% else %}
-            <p> There are no movies to watch! </p>
-        {% endif %}
+        </div>
     </div>
-    <div>
-        <form method="POST" action="">
-            <h2> Escolha as poltronas: </h2>
+
+    <div class="escolha_poltrona">
+        <form  id="form_poltronas" method="POST" action="">
+            <h1> Escolha as poltronas: </h1>
+            <div class="coluna">
             {% for coluna in range(poltronas[0]|length, 0, -1) %}
-                <a>{{ coluna }}</a>
+                <a class="a_coluna">{{ coluna }}</a>
             {% endfor %}
             <br>
-            {% for linha in range(poltronas|length) %}
-                
-                {% for poltrona in range(poltronas[linha]|length) %}
-                    {% if poltronas[linha][poltrona] == 1 %}
-                        <input type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}" disabled>
-                    {% else %}
-                        <input type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}">
-                    {% endif %}
+                {% for linha in range(poltronas|length) %}
+                    
+                    {% for poltrona in range(poltronas[linha]|length) %}
+                        {% if poltronas[linha][poltrona] == 1 %}
+                            <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}" disabled>
+                        {% else %}
+                            <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}">
+                        {% endif %}
+                    {% endfor %}
+                    <a class="a_linha"> {{ letras[linha].upper()}} </a>
+                    <br>
                 {% endfor %}
-                <a> {{ letras[linha].upper()}} </a>
-                <br>
-                
-            {% endfor %}
-            <p>TELA</p>
+            </div>
+            <p class="tela">TELA</p>
+
             {{ form.hidden_tag() }}
-            <fieldset>
+            <fieldset class="box_seleçao">
                 
-                <div>
+                <div class="meias">
                     <!-- form.something(class = "something to style") -->
                     {{ form.meias.label(class="senha") }}<br>
                     {% if form.meias.errors %}
@@ -67,7 +77,7 @@
                     {% endif %}  
                 </div>
                 
-                <div>
+                <div class="pagamento">
                     <!-- A COR DAS ESCOLHAS FICA IGUAL A COR DAS LETRAS DA CLASSE CSS '*' (BRANCO) E NÃO SE VÊ  -->
                     {{ form.maneira.label(class="senha")}} <br>
                     {{ form.maneira(class="camposenha") }}
@@ -79,4 +89,5 @@
             </div>
         </form>
     </div>
+</main>
 {% endblock content %}

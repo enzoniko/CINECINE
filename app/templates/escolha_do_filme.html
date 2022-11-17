@@ -37,7 +37,7 @@
                             {% endif %}
 
                             {% for horario in sessao[3] %}
-                                <a href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
+                                <a class="horario" href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
                             {% endfor %}
                                    
                         {% endfor %}
