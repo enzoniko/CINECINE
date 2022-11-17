@@ -96,12 +96,16 @@ img{
     border-radius: 8px;
 }
 
+.nova_sessao{
+    color:#fff;
+}
+
 .info{
     margin-bottom: 20px;
 }
 
 .cartaz_info a{
-    padding: 8px 16px;
+    padding: 10px 15px;
     margin: 3px;
 }
 
@@ -141,13 +145,10 @@ main h1{
 }
 
 .tipo, .genero{
-    width: 15%;
     padding: 8px 16px;
     margin: 3px;
     letter-spacing: 1px;
     font-size: 14px;
-    border: #BB0000 solid 2px;
-    border-radius: 8px;
     margin: 10px 0px 0px 0px;
 }
 
@@ -155,10 +156,20 @@ main h1{
     background-color: #BB0000;
     border: #BB0000 solid 2px;
     width: 15%;
+    color: #fff;
+    border-radius: 8px;
 }
 
 .genero{
-    border: #ffffff solid 1px;
+    border-left: #ffffff solid 1px;
+    margin: 10px 0px 10px 0px;
+}
+
+.idade{
+    margin: 10px 15px 10px 0px;
+    padding: 10px 10px 10px 10px;
+    border: #fff solid 1px;
+    border-radius: 8px;
 }
 
 .titulo_filme{

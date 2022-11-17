@@ -71,21 +71,17 @@ def poltronas(id_sessao, horario):
 @app.route('/pagamentos/<pagamento_id>/<id_sessao>/<horario>/<poltronas>', methods=['GET', 'POST'])
 def pagamento(pagamento_id, id_sessao, horario, poltronas):
 
-    qr = qrcode.make(f"{poltronas} {horario} {id_sessao} {pagamento_id}")
+    qr = qrcode.make(f"Poltronas: {poltronas} Horário: {horario} ID_SESSAO: {id_sessao} ID_PAGAMENTO: {pagamento_id} Sala {[salas.index(sala) for sala in salas if int(id_sessao) in [sessao.id for sessao in sala.sessoes]][0] + 1}")
     qr.save('app/static/qr.png')
-    return render_template('pagamentos.html', title='Pagamentos', horario = horario, sessao = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0], valor_total= payments[pagamento_id].valor, maneira=payments[pagamento_id].forma, poltronas=poltronas)
+     
+    return render_template('pagamentos.html', title='Pagamentos', horario = horario, sessao = [sessao for sessao in sessoes if sessao.id == int(id_sessao)][0], valor_total= payments[pagamento_id].valor, maneira=payments[pagamento_id].forma, poltronas=poltronas, sala=[salas.index(sala) for sala in salas if int(id_sessao) in [sessao.id for sessao in sala.sessoes]][0])
 
 
 @app.route('/adminLogin', methods=['GET', 'POST'])
 def adminLogin():
     form: AdminLoginForm = AdminLoginForm()
-    if form.validate_on_submit():
-        if form.password.data == "adminadmin":
-            # flash(" ", "class")
-            flash("Admin logged in successfully!")
-            return redirect(url_for('adminMenu'))
-        else:
-            flash("Login unsuccessful. Please check username and password")
+    if form.validate_on_submit() and form.password.data == "adminadmin":
+        return redirect(url_for('adminMenu'))
     return render_template('adminLogin.html', title="Admin Login", form=form)
 
 @app.route('/adminMenu', methods=['GET', 'POST'])

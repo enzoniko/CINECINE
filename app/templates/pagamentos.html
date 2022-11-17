@@ -40,6 +40,7 @@
     <p>Forma: {{ maneira }}</p>
     <p>Horário: {{ horario }}</p>
     <p>Poltronas: {{ poltronas }}</p>
+    <p>Sala {{ sala + 1 }}</p>
     <p> Guarde esse QRCODE para entrar na sala: </p>
     <img src="{{url_for('static', filename='qr.png')}}">
 </main>   
