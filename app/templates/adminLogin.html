@@ -1,11 +1,5 @@
-<header class="home">
-    <nav>
-        <h1 class="nome_marca">CINECINE</h1>
-        {% extends "layout.html" %}
-        {% block content %}
-    </nav>
-</header>
-<main>
+{% extends "layout.html" %}
+{% block content %}
     <div>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
@@ -35,5 +29,4 @@
             </div>
         </form>
     </div>
-</main>
 {% endblock content %}
