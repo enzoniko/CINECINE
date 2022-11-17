@@ -10,7 +10,7 @@
     {% for tipo in dados_faturamento  %}
         <p> {{tipo}}: {{dados_faturamento[tipo]}} </p>
     {% endfor %}
-    <a href="{{ url_for('editar_sessao', id_sessao = '0') }}"> ADICIONAR NOVA SESSAO </a>
+    <a class="nova_sessao" href="{{ url_for('editar_sessao', id_sessao = '0') }}"> ADICIONAR NOVA SESSAO </a>
     <div>
         
         {% if sessions %}
