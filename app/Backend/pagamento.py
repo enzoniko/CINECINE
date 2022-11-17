@@ -18,10 +18,3 @@ class Pagamento():
     def set_valor(self, ingressos, meias):
         self.valor = 30 * (ingressos - meias) + 15 * meias
 
-    # print_info imprime os informações da compra
-    def print_info(self):
-        print(f"Inteiras: {self.ingressos - self.meias}")
-        print(f"Meias: {self.meias}")
-        print(f"Valor: R${self.valor},00")
-        print(f"Forma de pagamento: {self.forma}")
-

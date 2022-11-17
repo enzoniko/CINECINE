@@ -5,11 +5,29 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.Backend.sessao import Sessao
 from app.forms import AdminLoginForm, CompraForm, EditarSessaoForm
-from app.Backend.main import sessoes, printar_filmes, sala_mais_vazia, salas, pagamentos, total_faturado, alterar_sessao
-from app.Backend.helpers import load_objects, most_empty, store_objects, lista_strings_para_string
+from app.Backend.helpers import lugares_disponiveis, load_objects, most_empty, store_objects, lista_strings_para_string
 from app.Backend.sala import Sala, letras
 from app.Backend.pagamento import Pagamento
+from app.Backend.filme import Filme
+from app.Backend.sessao import Sessao
+from app.Backend.sala import Sala
 import qrcode
+
+# Se os arquivos estiverem vazios guarda novos objetos (pra iniciar com algo), se tiver objetos para serem lidos, carrega
+filmes = list(load_objects('app/storage/filmes.pkl')) or store_objects([Filme("O Senhor dos Aneis"), Filme("Homens de Preto")], "app/storage/filmes.pkl")
+
+sessoes = list(load_objects('app/storage/sessoes.pkl')) or store_objects([Sessao(nome = 'O Senhor dos Aneis', legenda = False, DDD = False, horarios = ['15:00', '20:00']), Sessao(nome = 'O Senhor dos Aneis', legenda = False, DDD = False, horarios = ['15:00', '23:00']), Sessao(nome = 'Homens de Preto', legenda = True, DDD = False, horarios = ['22:00', '23:00'])], "app/storage/sessoes.pkl")
+
+if not list(load_objects('app/storage/salas.pkl')):
+    salas = [Sala(), Sala()]
+    salas[0].adicionar_sessao(sessoes[0])
+    salas[1].adicionar_sessao(sessoes[1])
+    salas[1].adicionar_sessao(sessoes[2])
+    salas = store_objects(salas, "app/storage/salas.pkl")
+else:
+    salas = list(load_objects('app/storage/salas.pkl'))
+
+pagamentos = list(load_objects('app/storage/pagamentos.pkl')) or store_objects([], "app/storage/pagamentos.pkl")
 
 payments: Dict[str, Pagamento] = {}
 @app.route('/', methods=['GET', 'POST'])
@@ -24,7 +42,7 @@ def escolha_do_filme():
                 new: list = [each.generos, each.DDD, each.legenda, each.horarios, each.id, each.classificacao, each.description, each.imagem]
                 sessions[sessao.nome].append(new)
 
-    return render_template('escolha_do_filme.html', title='Filmes', filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
+    return render_template('escolha_do_filme.html', title='Filmes', filmes=[(filmes.index(filme) + 1, filme) for filme in filmes], sessions=sessions, sessoes=sessoes)
 
 @app.route('/poltronas/<id_sessao>/<horario>', methods=['GET', 'POST'])
 def poltronas(id_sessao, horario):
@@ -42,8 +60,13 @@ def poltronas(id_sessao, horario):
             for sala in salas
         ]
     )
+    sala: Sala = None
+    for s in salas:
+        for horario in session.horarios:
+            if session in s.sessoes and lugares_disponiveis(s.cronograma[f"{session.id} {horario}"]) == quantidade_lugares_disponiveis_sala_mais_vazia:
+                sala: Sala = s
+                break
 
-    sala: Sala = sala_mais_vazia(quantidade_lugares_disponiveis_sala_mais_vazia, session)
     poltronas: List[List[int]] = sala.cronograma[f"{id_sessao} {horario}"]
     poltronas: List[List[int]] = [poltronas[i-1][::-1] for i in range(len(poltronas), 0, -1)]
     form: CompraForm = CompraForm()
@@ -63,8 +86,6 @@ def poltronas(id_sessao, horario):
             store_objects(salas, 'app/storage/salas.pkl')
     
             return redirect(url_for('pagamento', pagamento_id=pagamento.id, id_sessao=id_sessao, horario=horario, poltronas=lista_strings_para_string([poltrona.upper() for poltrona in poltronas_a_preencher])))
-
-    sala.printar_poltronas(id_sessao, horario)
 
     return render_template('poltronas.html', title='Poltronas', letras=letras[::-1][:len(poltronas)], horario = horario, sessao = session, form=form, poltronas=poltronas)
 
@@ -95,7 +116,7 @@ def adminMenu():
             for each in [s for s in sessoes if s.nome == sessao.nome]:
                 new: list = [each.generos, each.DDD, each.legenda, each.horarios, each.id, each.classificacao, each.description, each.imagem]
                 sessions[sessao.nome].append(new)
-    return render_template('adminMenu.html', title="Admin Menu", dados_faturamento=total_faturado(), salas=salas,  filmes=printar_filmes, sessions=sessions, sessoes=sessoes)
+    return render_template('adminMenu.html', title="Admin Menu", dados_faturamento={"Valor faturado": f'R$ {sum(pagamento.valor for pagamento in pagamentos)},00', "Total de Ingressos": sum(pagamento.ingressos for pagamento in pagamentos), "Total de Ingressos Inteiros" :sum(pagamento.ingressos - pagamento.meias for pagamento in pagamentos), "Total de Meias-entradas":sum(pagamento.meias for pagamento in pagamentos)} if pagamentos != [] else None, salas=salas,  filmes=[(filmes.index(filme) + 1, filme) for filme in filmes], sessions=sessions, sessoes=sessoes)
 
 @app.route('/editar_sessao/<id_sessao>', methods=['GET', 'POST'])
 def editar_sessao(id_sessao):
