@@ -55,7 +55,8 @@
                         <div>
                             {% for horario in form.horarios %}
                                 <!-- form.something(class = "something to style") -->
-                                {{ horario.label(class="classificacao_filme") }}<br>
+                                <!--{{ horario.label(class="classificacao_filme") }}-->
+                                <br>
                                 {% if horario.errors %}
                                     {{ horario() }}
                                     <div>
