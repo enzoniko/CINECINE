@@ -2,6 +2,8 @@
 import pickle
 from typing import List
 
+from app.Backend.sala import Sala
+
 # Função lista_strings_para_string: recebe uma lista de strings e retorna uma string com todas as strings separadas por vírgula
 def lista_strings_para_string(lista) -> str:
     return ", ".join(lista)
@@ -20,8 +22,14 @@ def most_empty(matrizes) -> int:
                     matriz)
     return quantidade_de_lugares_disponiveis_da_matriz_mais_vazia
 
+def get_most_empty_room(session, salas, quantidade_lugares_disponiveis_sala_mais_vazia):
+    for s in salas:
+        for horario in session.horarios:
+            if session in s.sessoes and lugares_disponiveis(s.cronograma[f"{session.id} {horario}"]) == quantidade_lugares_disponiveis_sala_mais_vazia:
+                sala: Sala = s
+                return sala
+                
 # Helper functions for the database:
-
 def save_object(obj: callable, filename: str):
     with open(filename, 'wb') as output:
         pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
