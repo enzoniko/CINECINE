@@ -48,3 +48,7 @@ Final Project for Object Oriented Programming 2
 > > >- Enjoy the movie.
 
 
+## Poo Concepts used:
+> - Inheritance (Sessao inherits from Filme)
+> - Polymorphism (Sessao also has a method called __post_init__())
+> - Agrregation (Sala has a list of Sessoes)

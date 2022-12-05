@@ -1,5 +1,6 @@
 flask
-wtflask
-Pillow
+wtforms
 qrcode
 tmdbv3api
+flask-wtf
+Image
