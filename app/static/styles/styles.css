@@ -2,6 +2,13 @@
 
 /*----------------------- GERAL E HOME ----------------------------*/
 
+/*  -- MUDAR O TAMANHO DAS INFORMAÇÕES NA PARTE DA EDIÇÃO, NO HOME É 80% POR CAUSA DA IMAGEM
+    NA EDIÇÃO NÃO PRECISAMOS QUE SEJA PEQUENO.
+    
+    -- DESCOBRIR COMO COLOCAR ELEMENTOS UM DO LADO NO OUTRO COMO OS HORARIOS NA HORA DE EDITAR.
+
+    --
+*/
 
 *{
     margin: 0;
@@ -21,7 +28,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color:  rgb(12, 12, 12);
     border: #fff solid 1px;
     border-radius: 8px;
 }
@@ -31,7 +38,7 @@
   }
 
 body{
-    background-color: #000;
+    background-color: rgb(12, 12, 12);
     color:#fff;
     margin: 0px auto;
 }
@@ -105,8 +112,9 @@ img{
 }
 
 .cartaz_info a{
-    padding: 10px 15px;
-    margin: 3px;
+    height: 40px;
+    width: 100px;
+    padding: 5px 0px 0px 30px;
 }
 
 header p{
@@ -126,10 +134,10 @@ nav{
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 14px;
-    line-height: 60px;
     transition: 0.2s;
     border: #BB0000 solid 2px;
     border-radius: 8px;
+    margin: 5px 5px 5px 5px;
 }
 
 .horario:hover{
@@ -149,15 +157,14 @@ main h1{
     margin: 3px;
     letter-spacing: 1px;
     font-size: 14px;
-    margin: 10px 0px 0px 0px;
 }
 
 .tipo{
+    width: 100px;
     background-color: #BB0000;
-    border: #BB0000 solid 2px;
-    width: 15%;
     color: #fff;
     border-radius: 8px;
+    margin: 5px 5px 5px 5px;
 }
 
 .genero{
@@ -179,15 +186,20 @@ main h1{
     align-items: center;
 }
 
+.sinopse{
+    height: 130px;
+    overflow-y: scroll;
+    padding: 0px 10px 0px 0px;
+}
+
 .conteudo_filme{
     width: 100%;
-    height: 90%;
 }
 
 .cartaz{
     width: 100%;
     display: flex;
-    margin:64px 0px 0px 0px;
+    margin:64px 0px 64px 0px;
 }
 
 .cartaz_info{
@@ -196,44 +208,139 @@ main h1{
     margin: 0px 0px 0px 20px;
     align-items: center;
     flex-wrap: wrap;
+    line-height: 26px;
+}
+
+.cartaz_info_edicao{
+    justify-content: space-between;
+    width: 80%;
+    display: flex;
+    margin: 0px 0px 0px 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tipo_edit{
+    letter-spacing: 1px;
+    font-size: 14px;
+    border: 1px solid #BB0000;
+    color: #fff;
+    border-radius: 8px;
+    margin: 5px 5px 5px 5px;
+}
+
+.tipo_edit:hover{
+    background: #BB0000;
+    color: aliceblue;
+    box-shadow: 0 0 25px #BB0000;
+    transition-delay: 0.1s ;
 }
 
 .info p{
-    background-color: #000;
+    background-color: rgb(12, 12, 12);
+}
+
+/*----------------------- POLTRONAS ----------------------------*/
+
+#form_poltronas{
+    display: flex;
+    flex-direction: row;
+    align-items: normal;
+}
+
+.bloco_poltronas{
+    margin: 10px 10px 10px 10px;
+}
+
+.bloco_form{
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.bloco_poltronas h1{
+    margin:0px 30px 30px 14px;
 }
 
 input{
     width: 30px;
     height: 30px;
     margin: 5px 5px;
+    font-size: 18px;
+}
+
+input:hover{
+    box-shadow: 0 0 5px #fff;
 }
 
 .camposenha{
-    width: 100px;
-    color: #000
+    width: 300px;
+    height: 35px;
+    background:  rgb(12, 12, 12);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 10px 10px 10px;
+}
+
+#meias{
+    width: 20%;
+    border:1px solid #fff;
+}
+
+.meias{
+    margin: 30px 0px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagamento{
+    margin: 30px 0px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#maneira{
+    margin: 10px 0px 10px 0px;
 }
 
 #submit{
-    width: 100px;
-    color: #000;
+    width: 300px;
+    height: 40px;
+    background-color: rgb(12, 12, 12);
+    color: #fff;
+    border: 2px solid #BB0000;
+    border-radius: 8px;
 }
 
-/*----------------------- POLTRONAS ----------------------------*/
+#submit:hover{
+    background: #BB0000;
+    color: aliceblue;
+    box-shadow: 0 0 25px #BB0000;
+    transition-delay: 0.1s ;
+}
+
+#password{
+    border: 1px solid #fff;
+}
+
+.poltronas{
+    margin: 20px 10px;
+}
 
 .escolha_poltrona{
     display: flex;
-    margin: 0px auto;
-}
-
-#form_poltronas{
-    margin: 0px auto;
+    margin: 50px auto;
 }
 
 .a_coluna{
     color: #fff;
     font-size: 16px;
     font-weight: 700;
-    margin: 0px 32px 0px 24px;
+    margin: 0px 19px 0px 12px;
 }
 
 .a_linha{
@@ -247,11 +354,271 @@ input{
     font-weight: 700;
     font-size: 20px ;
     letter-spacing: 10px;
-    margin: 0px 0px 0px 310px;
+    margin: 0px 0px 0px 185px;
 }
 
 .check{
-    margin: 10px 10px 10px 10px;
-    width: 45px;
-    height: 45px;
+    margin: 5px 5px 5px 5px;
+    width: 30px;
+    height: 30px;
+}
+
+/*----------------------- EDIÇÃO FILME ----------------------------*/
+
+fieldset{
+    border: none;
+}
+
+.form{
+    display: flex;
+    margin: 64px 0px 64px 0px;
+}
+
+label{
+    font-size: 18px;
+}
+.label_titulo_filme, .label_classificacao_filme{
+    display: flex;
+}
+
+.cartaz_info_edit{
+    width: 80%;
+    display: flex;
+    margin: 0px 0px 0px 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 26px;
+}
+
+.cartaz_info_edit p{
+    line-height: 30px;
+}
+
+.tipo_edit{
+    text-decoration: none;
+    padding: 8px 16px;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.div_configuracao, .div_classificacao, .div_horario{
+   align-items: center;
+}
+
+.div_horario{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.div_configuracao{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.confirmar{
+    display: flex;
+    justify-content: center;
+    margin: 60px 0px;
+}
+
+.escolha_horario{
+    display: flex;
+}
+
+#titulo{
+    width: 450px;
+    height: 50px;
+    background-color: rgb(12, 12, 12);
+    border: 2px solid #fff;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 22px;
+    margin: -13px 0px 0px 0px;
+    padding: 10px 10px 10px 20px;
+}
+
+#classificacao{
+    margin: -13px 0px 0px 0px;
+}
+
+#horarios-0, #horarios-1{
+    width: 100px;
+    height: 50px;
+    background-color: #BB0000;
+    padding: 0px 10px 0px 10px;
+    border-radius: 8px;
+    border-color: #BB0000;
+    color: #fff;
+    font-size: 16px;
+}
+
+#confirmar, #cancelar, #aplicar{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(12, 12, 12);
+    padding: 0px 10px 0px 10px;
+    border-radius: 8px;
+    border: 1px solid #BB0000;
+    color: #fff;
+    font-size: 16px;
+}
+
+#confirmar:hover, #cancelar:hover, #aplicar:hover{
+    background: #BB0000;
+    color: aliceblue;
+    box-shadow: 0 0 25px #BB0000;
+    transition-delay: 0.1s ;
+}
+
+select{
+    background-color: rgb(12, 12, 12);
+    color: #fff;
+    padding: 10px 10px 10px 20px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    height: 50px;
+}
+
+.faturamento {
+    display: flex;
+    margin: 20px 0px 20px 0px;
+    flex-direction: column;
+}
+
+.faturamento p{
+    font-size: 18px;
+    margin: 5px 0px 5px 0px;
+}
+
+.nova_sessao{
+    border: 2px solid #BB0000;
+    border-radius: 8px;
+    width: 100%;
+    height: 50px;
+    text-decoration: none;
+    display: flex;
+    padding: 7px 0px 0px 350px;
+    margin-top: 30px;
+}
+
+.nova_sessao:hover{
+    background: #BB0000;
+    color: aliceblue;
+    box-shadow: 0 0 25px #BB0000;
+    transition-delay: 0.1s ;
+}
+
+.horario_edit{
+    margin: 0px 20px;
+}
+
+.identacao{
+    display: flex;
+    height: 50px;
+    align-items: center;
+}
+
+/*----------------------- ADMIN LOGIN ----------------------------*/
+
+.login{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 200px 200px 0px 200px;
+    padding: 30px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+}
+
+.login:hover{
+    box-shadow: 0 0 5px #fff;
+    transition: 0.2s;
+}
+
+.formulario_login{
+    align-items: center;
+    margin: 20px 0px;
+}
+
+/*----------------------- PAGAMENTO ----------------------------*/
+#pagamento{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: end;
+    margin: 0px 358px 60px 0px;
+}
+
+.msg_pagamento{
+    margin: 20px 20px 20px 20px;
+    font-size: 16px;
+}
+
+.qrcode{
+    display: flex;
+}
+
+.msg{
+    font-size: 20px;
+    margin: 0px 0px 60px 350px;
+}
+
+
+
+.home{
+    animation: fromTop .7s .2s backwards;
+}
+
+.login{
+    animation: fromBottom .7s backwards;
+}
+
+.faturamento{
+    animation: fromBottom .7s backwards;
+}
+
+.cartaz{
+    animation: fromBottom .7s backwards;
+}
+
+.cartaz:nth-child(1){
+    animation-delay: 0;
+}
+
+.cartaz:nth-child(2){
+    animation-delay: .4s ;
+}
+.cartaz:nth-child(3){
+    animation-delay: .8s;
+}
+.cartaz:nth-child(4){
+    animation-delay: .10s;
+}
+.cartaz:nth-child(5){
+    animation-delay: .12s;
+}
+
+@keyframes fromTop{
+    from{
+        opacity: 0;
+        transform: translateY(-30px)
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes fromBottom{
+    from{
+        opacity: 0;
+        transform: translateY(30px)
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0)
+    }
 }

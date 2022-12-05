@@ -17,7 +17,7 @@ class EditarSessaoForm(FlaskForm):
     classificacao = SelectField('Alterar a classificação: ', choices=[('Livre', 'Livre'), ('+10', '+10'), ('+12', '+12'), ('+14', '+14'), ('+16', '+16'), ('+18', '+18')])
     legenda = BooleanField('Legendado:')
     DDD = BooleanField('3D:')
-    horarios = FieldList(unbound_field = TimeField(validators=[DataRequired()], default=datetime.strptime('00:00', '%H:%M')), min_entries=2, max_entries=4)
+    horarios = FieldList(unbound_field = TimeField(validators=[DataRequired()], default=datetime.strptime('00:00', '%H:%M')), min_entries=2, max_entries=4, render_kw={"style":"font-size:30px"})
     confirmar = SubmitField('Confirmar', id='confirmar')
     aplicar = SubmitField('Aplicar', id='aplicar')
     cancelar = SubmitField('Cancelar', id='cancelar')
