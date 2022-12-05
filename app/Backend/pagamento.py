@@ -8,6 +8,7 @@ class Pagamento():
     meias: int = 0
     valor: float = 0
     forma: str = "Dinheiro"
+    extra: int = 0
     id: int = 0
 
     def __post_init__(self):
@@ -16,5 +17,5 @@ class Pagamento():
    
     # set_valor modifica o valor, calculando com base nos ingressos e nas meias
     def set_valor(self, ingressos, meias):
-        self.valor = 30 * (ingressos - meias) + 15 * meias
+        self.valor = 30 * (ingressos - meias) + 15 * meias + self.extra*2*ingressos
 

@@ -22,24 +22,24 @@
                             <p class="genero"> {{ element }} </p>
                         {% endfor %}
                             
-                        <p> {{ sessions[filme][0][6] }} </p>
+                        <p class="sinopse"> {{ sessions[filme][0][6] }} </p>
                         <div class="conteudo_filme">
                         {% for sessao in sessions[filme] %}
-                            
-                            {% if sessao[1] == True and sessao[2] == True %}
-                                <p class="tipo">3D - LEG</p>
-                            {% elif sessao[1] == True and sessao[2] == False %}
-                                <p class="tipo">3D - DUB</p>
-                            {% elif sessao[1] == False and sessao[2] == True %}
-                                <p class="tipo">2D - LEG</p>
-                            {% else %}
-                                <p class="tipo">2D - DUB</p>
-                            {% endif %}
+                            <div class="identacao">
+                                {% if sessao[1] == True and sessao[2] == True %}
+                                    <p class="tipo">3D - LEG</p>
+                                {% elif sessao[1] == True and sessao[2] == False %}
+                                    <p class="tipo">3D - DUB</p>
+                                {% elif sessao[1] == False and sessao[2] == True %}
+                                    <p class="tipo">2D - LEG</p>
+                                {% else %}
+                                    <p class="tipo">2D - DUB</p>
+                                {% endif %}
 
-                            {% for horario in sessao[3] %}
-                                <a class="horario" href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
-                            {% endfor %}
-                                   
+                                {% for horario in sessao[3] %}
+                                    <a class="horario" href="{{ url_for('poltronas', horario = horario, id_sessao=sessao[4])}}"> {{ horario }} </a>
+                                {% endfor %}
+                            </div>  
                         {% endfor %}
                     </div>
                     </div>

@@ -26,8 +26,10 @@ class Filme:
             self.nome: str = search.original_title
             self.description: str = search.overview
             self.imagem: str = f'https://image.tmdb.org/t/p/original{search.poster_path}'
-            response = requests.get(f'https://api.themoviedb.org/3/movie/{search.id}?api_key={tmdb.api_key}&language=pt-BR')
-
+            try:
+                response = requests.get(f'https://api.themoviedb.org/3/movie/{search.id}?api_key={tmdb.api_key}&language=pt-BR')
+            except requests.exceptions.ConnectionError:
+                print('Erro de conexão')
             data_json = response.json()
             if data_json['genres']:
                 for i in range(len(data_json['genres'])):
