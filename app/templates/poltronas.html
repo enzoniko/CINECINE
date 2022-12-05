@@ -15,7 +15,7 @@
                 <div class="titulo_filme">
                     <h1> {{ sessao.nome }} </h1>
                 </div>
-                <p> {{ sessao.classificacao }} </p>
+                <p class="idade"> {{ sessao.classificacao }} </p>
                 {% for element in sessao.generos %}
                     <p class="genero"> {{ element }} </p>
                 {% endfor %}
@@ -35,57 +35,60 @@
             {% endif %}
         </div>
     </div>
-
     <div class="escolha_poltrona">
         <form  id="form_poltronas" method="POST" action="">
-            <h1> Escolha as poltronas: </h1>
-            <div class="coluna">
-            {% for coluna in range(poltronas[0]|length, 0, -1) %}
-                <a class="a_coluna">{{ coluna }}</a>
-            {% endfor %}
-            <br>
-                {% for linha in range(poltronas|length) %}
-                    
-                    {% for poltrona in range(poltronas[linha]|length) %}
-                        {% if poltronas[linha][poltrona] == 1 %}
-                            <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}" disabled>
-                        {% else %}
-                            <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}">
-                        {% endif %}
+            <div class="bloco_poltronas">
+                <h1> Escolha as poltronas: </h1>
+                <div class="poltronas">
+                    <div class="coluna">
+                    {% for coluna in range(poltronas[0]|length, 0, -1) %}
+                        <a class="a_coluna">{{ coluna }}</a>
                     {% endfor %}
-                    <a class="a_linha"> {{ letras[linha].upper()}} </a>
                     <br>
-                {% endfor %}
-            </div>
-            <p class="tela">TELA</p>
-
-            {{ form.hidden_tag() }}
-            <fieldset class="box_seleçao">
-                
-                <div class="meias">
-                    <!-- form.something(class = "something to style") -->
-                    {{ form.meias.label(class="senha") }}<br>
-                    {% if form.meias.errors %}
-                        {{ form.meias() }}
-                        <div>
-                            {% for error in form.meias.errors %}
-                                <span>{{ error }}</span>
+                        {% for linha in range(poltronas|length) %}
+                            
+                            {% for poltrona in range(poltronas[linha]|length) %}
+                                {% if poltronas[linha][poltrona] == 1 %}
+                                    <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}" disabled>
+                                {% else %}
+                                    <input class="check" type="checkbox" name="poltronas" value="{{ linha }} {{ poltrona }}">
+                                {% endif %}
                             {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.meias(class="camposenha") }}
-                    {% endif %}  
+                            <a class="a_linha"> {{ letras[linha].upper()}} </a>
+                            <br>
+                        {% endfor %}
+                    </div>
+                    <p class="tela">TELA</p>
                 </div>
+            </div>
+            <div class="bloco_form">
+                {{ form.hidden_tag() }}
+                <fieldset class="box_seleçao">
                 
-                <div class="pagamento">
-                    <!-- A COR DAS ESCOLHAS FICA IGUAL A COR DAS LETRAS DA CLASSE CSS '*' (BRANCO) E NÃO SE VÊ  -->
-                    {{ form.maneira.label(class="senha")}} <br>
-                    {{ form.maneira(class="camposenha") }}
+                    <div class="meias">
+                        <!-- form.something(class = "something to style") -->
+                        {{ form.meias.label(class="senha") }}<br>
+                        {% if form.meias.errors %}
+                            {{ form.meias() }}
+                            <div>
+                                {% for error in form.meias.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.meias(class="camposenha") }}
+                        {% endif %}  
+                    </div>
+                    
+                    <div class="pagamento">
+                        {{ form.maneira.label(class="senha")}} <br>
+                        {{ form.maneira(class="camposenha") }}
+                    </div>
+                
+                </fieldset>
+                <div>
+                    {{ form.submit() }}
                 </div>
-             
-            </fieldset>
-            <div>
-                {{ form.submit() }}
             </div>
         </form>
     </div>

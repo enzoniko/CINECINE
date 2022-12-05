@@ -6,12 +6,12 @@
     </nav>
 </header>
 <main>
-    <div>
+    <div class="login">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset>
                 <legend>Login to access admin functions</legend>
-                <div>
+                <div class="formulario_login">
                     <!-- form.something(class = "something to style") -->
                     {{ form.password.label(class="senha") }}<br>
                     {% if form.password.errors %}

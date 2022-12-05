@@ -6,42 +6,48 @@
     </nav>
 </header>
 <main>
-    <p> Obrigado por comprar conosco! </p>
-    <div>
+    <div class="cartaz">
   
         {% if sessao %}
             <div class="cartaz_imagem">
                 <img src={{ sessao.imagem }}>
             </div>
-            <div class="titulo_filme">
-                <h1> {{ sessao.nome }} </h1>
+            <div class="cartaz_info">
+                <div class="titulo_filme">
+                    <h1> {{ sessao.nome }} </h1>
+                </div>
+                <p class="idade"> {{ sessao.classificacao }} </p>
+                {% for element in sessao.generos %}
+                    <p class="genero"> {{ element }} </p>
+                {% endfor %}
+                <p class="sinopse"> {{ sessao.description }} </p>
+                <p> {{ horario }} </p>
+                {% if sessao.legenda == True and sessao.DDD == True %}
+                    <p class="tipo">3D - LEG</p>
+                {% elif sessao.legenda == True and sessao.DDD == False %}
+                    <p class="tipo">3D - DUB</p>
+                {% elif sessao.legenda == False and sessao.DDD == True %}
+                    <p class="tipo">2D - LEG</p>
+                {% else %}
+                    <p class="tipo">2D - DUB</p>
+                {% endif %}
             </div>
-            <p> {{ sessao.classificacao }} </p>
-            {% for element in sessao.generos %}
-                <p class="genero"> {{ element }} </p>
-            {% endfor %}
-            <p> {{ sessao.description }} </p>
-            <p> {{ horario }} </p>
-            {% if sessao.legenda == True and sessao.DDD == True %}
-                <p class="tipo">3D - LEG</p>
-            {% elif sessao.legenda == True and sessao.DDD == False %}
-                <p class="tipo">3D - DUB</p>
-            {% elif sessao.legenda == False and sessao.DDD == True %}
-                <p class="tipo">2D - LEG</p>
             {% else %}
-                <p class="tipo">2D - DUB</p>
-            {% endif %}
-        {% else %}
             <p> There are no movies to watch! </p>
         {% endif %}
     </div>
-    <p>Sua compra:</p>
-    <p>Preço total: {{ valor_total }}</p>
-    <p>Forma: {{ maneira }}</p>
-    <p>Horário: {{ horario }}</p>
-    <p>Poltronas: {{ poltronas }}</p>
-    <p>Sala {{ sala + 1 }}</p>
-    <p> Guarde esse QRCODE para entrar na sala: </p>
-    <img src="{{url_for('static', filename='qr.png')}}">
+    <div id="pagamento">
+        <div class="msg_pagamento">
+            <p>Sua compra:</p>
+            <p>Preço total: R${{ valor_total }},00</p>
+            <p>Forma: {{ maneira }}</p>
+            <p>Horário: {{ horario }}</p>
+            <p>Poltronas: {{ poltronas }}</p>
+            <p>Sala {{ sala + 1 }}</p>
+            <p> Guarde esse QRCODE para entrar na sala! </p>
+        </div>
+        <div class="qrcode"><img src="{{url_for('static', filename='qr.png')}}"></div>
+    </div>
+    <p class="msg"> Obrigado por comprar conosco! </p>
 </main>   
 {% endblock content %}
