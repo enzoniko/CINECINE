@@ -52,3 +52,8 @@ Final Project for Object Oriented Programming 2
 > - Inheritance (Sessao inherits from Filme)
 > - Polymorphism (Sessao also has a method called __post_init__())
 > - Agrregation (Sala has a list of Sessoes)
+
+
+## Poo Patterns we would use:
+> - Factory (Sala, Filme, Sessao)
+> - We would use the Factory pattern to create the objects in a more organized, efficient and easy way.
