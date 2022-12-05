@@ -1,4 +1,4 @@
-# Projeto-Final-POO2
+# CINECINE
 Final Project for Object Oriented Programming 2
 
 ## How to run
