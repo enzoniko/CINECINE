@@ -1,6 +1,10 @@
 # CINECINE
 Final Project for Object Oriented Programming 2
 
+## Images
+![image info](./cinecine1.png)
+![image info](./cinecine2.png)
+![image info](./cinecine3.png)
 ## How to run
 > - Download the project and open it in your favorite IDE.
 > - Import all the project dependencies by using this command: `pip install -r requirements.txt`
